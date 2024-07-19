@@ -1,1 +1,1014 @@
-{"openapi":"3.0.0","paths":{"/":{"get":{"operationId":"AppController_getHello","parameters":[],"responses":{"200":{"description":""}}}},"/webqr/{campaignUuuid}":{"get":{"operationId":"AppController_root","parameters":[{"name":"campaignUuuid","required":true,"in":"path","schema":{"type":"string"}}],"responses":{"200":{"description":""}}}},"/auth/login":{"post":{"operationId":"AuthController_login","summary":"Login a user.","description":"This operation authenticates a user, creates a session and returns an user object containing a JWT token","parameters":[],"requestBody":{"required":true,"content":{"application/json":{"schema":{"$ref":"#/components/schemas/LoginUserDto"}}}},"responses":{"201":{"description":""}},"tags":["Authentication & Authorization"]}},"/ad/test":{"get":{"operationId":"AdController_list","parameters":[],"responses":{"200":{"description":""}},"tags":["Ad/Creative Controller"],"security":[{"access-token":[]}]}},"/ad":{"post":{"operationId":"AdController_create","parameters":[],"requestBody":{"required":true,"content":{"application/json":{"schema":{"$ref":"#/components/schemas/CreateAdDto"}}}},"responses":{"201":{"description":""}},"tags":["Ad/Creative Controller"],"security":[{"access-token":[]}]},"get":{"operationId":"AdController_get","parameters":[],"responses":{"200":{"description":""}},"tags":["Ad/Creative Controller"],"security":[{"access-token":[]}]}},"/ad/{id}":{"patch":{"operationId":"AdController_update","parameters":[{"name":"id","required":true,"in":"path","schema":{"type":"number"}}],"requestBody":{"required":true,"content":{"application/json":{"schema":{"$ref":"#/components/schemas/CreateAdDto"}}}},"responses":{"200":{"description":""}},"tags":["Ad/Creative Controller"],"security":[{"access-token":[]}]},"delete":{"operationId":"AdController_delete","parameters":[{"name":"id","required":true,"in":"path","schema":{"type":"number"}}],"responses":{"200":{"description":""}},"tags":["Ad/Creative Controller"],"security":[{"access-token":[]}]},"get":{"operationId":"AdController_getadById","parameters":[{"name":"id","required":true,"in":"path","schema":{"type":"number"}}],"responses":{"200":{"description":""}},"tags":["Ad/Creative Controller"],"security":[{"access-token":[]}]}},"/upload":{"post":{"operationId":"UploadController_uploadSingleFileWithPost","parameters":[],"responses":{"201":{"description":""}},"security":[{"access-token":[]}]},"delete":{"operationId":"UploadController_deletefile","parameters":[],"responses":{"200":{"description":""}},"security":[{"access-token":[]}]}},"/upload/test":{"get":{"operationId":"UploadController_list","parameters":[],"responses":{"200":{"description":""}}}},"/device/register":{"post":{"operationId":"DeviceController_registerDevice","parameters":[],"requestBody":{"required":true,"content":{"application/json":{"schema":{"$ref":"#/components/schemas/RegisterDeviceDto"}}}},"responses":{"201":{"description":""}},"tags":["Devide Controller"],"security":[{"access-token":[]}]}},"/device/check-code":{"get":{"operationId":"DeviceController_validateCode","summary":"Check the validdity of the 6 digit code.","description":"This operation authenticates a user, creates a session and returns an user object containing a JWT token","parameters":[{"name":"code","required":true,"in":"query","schema":{"type":"number"}}],"responses":{"200":{"description":""}},"tags":["Devide Controller"],"security":[{"access-token":[]}]}},"/device":{"get":{"operationId":"DeviceController_getdevices","summary":"Get the list of devices","description":"API that sends the list of all active-inactive devices","parameters":[],"responses":{"200":{"description":""}},"tags":["Devide Controller"],"security":[{"access-token":[]}]}},"/device/{id}":{"get":{"operationId":"DeviceController_getdevicesById","summary":"Get the details of a device","description":"API to get the details of an API","parameters":[{"name":"id","required":true,"in":"path","schema":{"type":"number"}}],"responses":{"200":{"description":""}},"tags":["Devide Controller"],"security":[{"access-token":[]}]}},"/connect/test":{"get":{"operationId":"TestController_list","parameters":[],"responses":{"200":{"description":""}},"tags":["Connect"]}},"/connect/devices":{"get":{"operationId":"TestController_deviceList","parameters":[],"responses":{"200":{"description":""}},"tags":["Connect"],"security":[{"access-token":[]}]}},"/connect/zedo-zips":{"get":{"operationId":"TestController_zedoZips","parameters":[],"responses":{"200":{"description":""}},"tags":["Connect"],"security":[{"access-token":[]}]}},"/campaign":{"post":{"operationId":"CampaignController_createCampaign","parameters":[],"requestBody":{"required":true,"content":{"application/json":{"schema":{"$ref":"#/components/schemas/CreateCampaignDTO"}}}},"responses":{"201":{"description":""}},"tags":["Campaign Management"],"security":[{"access-token":[]}]},"get":{"operationId":"CampaignController_getCampaign","parameters":[],"responses":{"200":{"description":""}},"tags":["Campaign Management"],"security":[{"access-token":[]}]}},"/campaign/redeem":{"post":{"operationId":"CampaignController_redeemCampaign","parameters":[],"requestBody":{"required":true,"content":{"application/json":{"schema":{"$ref":"#/components/schemas/RedeemCoupounDTO"}}}},"responses":{"201":{"description":""}},"tags":["Campaign Management"],"security":[{"access-token":[]}]}},"/campaign/validate-mssg/{mssg}":{"get":{"operationId":"CampaignController_validateTriggerMessage","parameters":[{"name":"mssg","required":true,"in":"path","schema":{"type":"string"}}],"responses":{"200":{"description":""}},"tags":["Campaign Management"],"security":[{"access-token":[]}]}},"/campaign/approve/{id}":{"post":{"operationId":"CampaignController_approveCampaign","parameters":[{"name":"id","required":true,"in":"path","schema":{"type":"number"}}],"responses":{"201":{"description":""}},"tags":["Campaign Management"],"security":[{"access-token":[]}]}},"/campaign/{id}":{"get":{"operationId":"CampaignController_getCampaignById","parameters":[{"name":"id","required":true,"in":"path","schema":{"type":"number"}}],"responses":{"200":{"description":""}},"tags":["Campaign Management"],"security":[{"access-token":[]}]},"patch":{"operationId":"CampaignController_update","parameters":[{"name":"id","required":true,"in":"path","schema":{"type":"number"}}],"responses":{"200":{"description":""}},"tags":["Campaign Management"],"security":[{"access-token":[]}]},"delete":{"operationId":"CampaignController_delete","parameters":[{"name":"id","required":true,"in":"path","schema":{"type":"number"}}],"responses":{"200":{"description":""}},"tags":["Campaign Management"],"security":[{"access-token":[]}]}},"/campaign/metrics/{id}":{"get":{"operationId":"CampaignController_getCampaignMetricsById","parameters":[{"name":"id","required":true,"in":"path","schema":{"type":"number"}}],"responses":{"200":{"description":""}},"tags":["Campaign Management"],"security":[{"access-token":[]}]}},"/bot/search/{uuid}":{"get":{"operationId":"QrController_searchByUUID","parameters":[{"name":"uuid","required":true,"in":"path","schema":{"type":"string"}}],"responses":{"200":{"description":""}},"tags":["Campaign Management"]}},"/bot/line/coupon":{"post":{"operationId":"QrController_generateLineQrLink","parameters":[],"responses":{"201":{"description":""}},"tags":["Campaign Management"],"security":[{"access-token":[]}]}},"/bot/browser/coupon/{userId}/{campaignId}":{"get":{"operationId":"QrController_generateBrowserQrLink","parameters":[{"name":"userId","required":true,"in":"path","schema":{"type":"string"}},{"name":"campaignId","required":true,"in":"path","schema":{"type":"string"}}],"responses":{"200":{"description":""}},"tags":["Campaign Management"]}},"/bot/qr-code/{userId}/{campaignId}":{"get":{"operationId":"QrController_generateQrCode","parameters":[],"responses":{"200":{"description":""}},"tags":["Campaign Management"]}}},"info":{"title":"DOOH API","description":"The DOOH API Documentation","version":"1.0","contact":{}},"tags":[],"servers":[],"components":{"securitySchemes":{"access-token":{"scheme":"bearer","bearerFormat":"JWT","type":"http","in":"header"}},"schemas":{"LoginUserDto":{"type":"object","properties":{}},"CreateAdDto":{"type":"object","properties":{}},"RegisterDeviceDto":{"type":"object","properties":{}},"CreateCampaignDTO":{"type":"object","properties":{}},"RedeemCoupounDTO":{"type":"object","properties":{}}}}}
+{
+    "openapi": "3.0.0",
+    "paths": {
+        "/auth/login": {
+            "post": {
+                "operationId": "AuthController_login",
+                "summary": "Login a user.",
+                "description": "This operation authenticates a user, creates a session and returns an user object containing a JWT token",
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/LoginUserDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": ""
+                    }
+                },
+                "tags": [
+                    "Authentication & Authorization"
+                ]
+            }
+        },
+        "/device/register": {
+            "post": {
+                "operationId": "DeviceController_registerDevice",
+                "summary": "Register a new device",
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RegisterDeviceDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Device registered successfully"
+                    }
+                },
+                "tags": [
+                    "Device"
+                ],
+                "security": [
+                    {
+                        "access-token": []
+                    }
+                ]
+            }
+        },
+        "/device/check-code": {
+            "get": {
+                "operationId": "DeviceController_validateCode",
+                "summary": "Check the validity of a 6-digit code",
+                "description": "Authenticates a user, creates a session, and returns a user object containing a JWT token",
+                "parameters": [
+                    {
+                        "name": "code",
+                        "required": true,
+                        "in": "query",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Code validated successfully"
+                    }
+                },
+                "tags": [
+                    "Device"
+                ],
+                "security": [
+                    {
+                        "access-token": []
+                    }
+                ]
+            }
+        },
+        "/device": {
+            "get": {
+                "operationId": "DeviceController_getdevices",
+                "summary": "Get the list of devices",
+                "description": "API that sends the list of all active-inactive devices",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "List of devices retrieved successfully"
+                    }
+                },
+                "tags": [
+                    "Device"
+                ],
+                "security": [
+                    {
+                        "access-token": []
+                    }
+                ]
+            }
+        },
+        "/device/{id}": {
+            "get": {
+                "operationId": "DeviceController_getdevicesById",
+                "summary": "Get the details of a device",
+                "description": "API to get the details of a device",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "description": "ID of the device",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Device details retrieved successfully"
+                    },
+                    "403": {
+                        "description": "Only Admin can access device details"
+                    }
+                },
+                "tags": [
+                    "Device"
+                ],
+                "security": [
+                    {
+                        "access-token": []
+                    }
+                ]
+            }
+        },
+        "/ad": {
+            "post": {
+                "operationId": "AdController_create",
+                "summary": "Create a new ad",
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateAdDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Ad created successfully"
+                    }
+                },
+                "tags": [
+                    "Ad/Creative"
+                ],
+                "security": [
+                    {
+                        "access-token": []
+                    }
+                ]
+            },
+            "get": {
+                "operationId": "AdController_get",
+                "summary": "Get all ads",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "List of all ads retrieved successfully"
+                    }
+                },
+                "tags": [
+                    "Ad/Creative"
+                ],
+                "security": [
+                    {
+                        "access-token": []
+                    }
+                ]
+            }
+        },
+        "/ad/{id}": {
+            "patch": {
+                "operationId": "AdController_update",
+                "summary": "Update an ad",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "description": "ID of the ad",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateAdDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Ad updated successfully"
+                    }
+                },
+                "tags": [
+                    "Ad/Creative"
+                ],
+                "security": [
+                    {
+                        "access-token": []
+                    }
+                ]
+            },
+            "delete": {
+                "operationId": "AdController_delete",
+                "summary": "Delete an ad",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "description": "ID of the ad",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ad deleted successfully"
+                    }
+                },
+                "tags": [
+                    "Ad/Creative"
+                ],
+                "security": [
+                    {
+                        "access-token": []
+                    }
+                ]
+            },
+            "get": {
+                "operationId": "AdController_getadById",
+                "summary": "Get ad details by ID",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "description": "ID of the ad",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ad details retrieved successfully"
+                    }
+                },
+                "tags": [
+                    "Ad/Creative"
+                ],
+                "security": [
+                    {
+                        "access-token": []
+                    }
+                ]
+            }
+        },
+        "/campaign": {
+            "post": {
+                "operationId": "CampaignController_createCampaign",
+                "summary": "Create a new campaign",
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateCampaignDTO"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Campaign created successfully"
+                    }
+                },
+                "tags": [
+                    "Campaign Management"
+                ],
+                "security": [
+                    {
+                        "access-token": []
+                    }
+                ]
+            },
+            "get": {
+                "operationId": "CampaignController_getCampaign",
+                "summary": "Get all campaigns",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "Campaigns retrieved successfully"
+                    }
+                },
+                "tags": [
+                    "Campaign Management"
+                ],
+                "security": [
+                    {
+                        "access-token": []
+                    }
+                ]
+            }
+        },
+        "/campaign/redeem": {
+            "post": {
+                "operationId": "CampaignController_redeemCampaign",
+                "summary": "Redeem a campaign coupon",
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RedeemCoupounDTO"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Coupon redeemed successfully"
+                    }
+                },
+                "tags": [
+                    "Campaign Management"
+                ],
+                "security": [
+                    {
+                        "access-token": []
+                    }
+                ]
+            }
+        },
+        "/campaign/validate-mssg/{mssg}": {
+            "get": {
+                "operationId": "CampaignController_validateTriggerMessage",
+                "summary": "Validate a trigger message",
+                "parameters": [
+                    {
+                        "name": "mssg",
+                        "required": true,
+                        "in": "path",
+                        "description": "The message to validate",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Message validated successfully"
+                    }
+                },
+                "tags": [
+                    "Campaign Management"
+                ],
+                "security": [
+                    {
+                        "access-token": []
+                    }
+                ]
+            }
+        },
+        "/campaign/approve/{id}": {
+            "post": {
+                "operationId": "CampaignController_approveCampaign",
+                "summary": "Approve a campaign",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "description": "The ID of the campaign to approve",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Campaign approved successfully"
+                    }
+                },
+                "tags": [
+                    "Campaign Management"
+                ],
+                "security": [
+                    {
+                        "access-token": []
+                    }
+                ]
+            }
+        },
+        "/campaign/{id}": {
+            "get": {
+                "operationId": "CampaignController_getCampaignById",
+                "summary": "Get a campaign by ID",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "description": "The ID of the campaign",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Campaign retrieved successfully"
+                    }
+                },
+                "tags": [
+                    "Campaign Management"
+                ],
+                "security": [
+                    {
+                        "access-token": []
+                    }
+                ]
+            },
+            "patch": {
+                "operationId": "CampaignController_update",
+                "summary": "Update a campaign",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "description": "The ID of the campaign to update",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "description": "The updated campaign data",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Campaign updated successfully"
+                    }
+                },
+                "tags": [
+                    "Campaign Management"
+                ],
+                "security": [
+                    {
+                        "access-token": []
+                    }
+                ]
+            },
+            "delete": {
+                "operationId": "CampaignController_delete",
+                "summary": "Delete a campaign",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "description": "The ID of the campaign to delete",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Campaign deleted successfully"
+                    }
+                },
+                "tags": [
+                    "Campaign Management"
+                ],
+                "security": [
+                    {
+                        "access-token": []
+                    }
+                ]
+            }
+        },
+        "/campaign/metrics/{id}": {
+            "get": {
+                "operationId": "CampaignController_getCampaignMetricsById",
+                "summary": "Get campaign metrics by ID",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "description": "The ID of the campaign",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Campaign metrics retrieved successfully"
+                    }
+                },
+                "tags": [
+                    "Campaign Management"
+                ],
+                "security": [
+                    {
+                        "access-token": []
+                    }
+                ]
+            }
+        },
+        "/bot/search/{uuid}": {
+            "get": {
+                "operationId": "QrController_searchByUUID",
+                "summary": "Search campaign by UUID",
+                "parameters": [
+                    {
+                        "name": "uuid",
+                        "required": true,
+                        "in": "path",
+                        "description": "UUID of the campaign",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Campaign retrieved successfully"
+                    },
+                    "404": {
+                        "description": "Campaign not found"
+                    }
+                },
+                "tags": [
+                    "Qr Campaign"
+                ]
+            }
+        },
+        "/bot/line/coupon": {
+            "post": {
+                "operationId": "QrController_generateLineQrLink",
+                "summary": "Generate LINE QR link for a coupon",
+                "parameters": [],
+                "responses": {
+                    "201": {
+                        "description": "LINE QR link generated successfully"
+                    }
+                },
+                "tags": [
+                    "Qr Campaign"
+                ],
+                "security": [
+                    {
+                        "access-token": []
+                    }
+                ]
+            }
+        },
+        "/bot/browser/coupon/{userId}/{campaignId}": {
+            "get": {
+                "operationId": "QrController_generateBrowserQrLink",
+                "summary": "Generate browser QR link for a coupon",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "required": true,
+                        "in": "path",
+                        "description": "User ID",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "campaignId",
+                        "required": true,
+                        "in": "path",
+                        "description": "Campaign ID",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Browser QR link generated successfully"
+                    }
+                },
+                "tags": [
+                    "Qr Campaign"
+                ]
+            }
+        },
+        "/bot/qr-code/{userId}/{campaignId}": {
+            "get": {
+                "operationId": "QrController_generateQrCode",
+                "summary": "Generate QR code",
+                "parameters": [
+                    {
+                        "name": "campaignId",
+                        "required": true,
+                        "in": "path",
+                        "description": "Campaign ID",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "userId",
+                        "required": true,
+                        "in": "path",
+                        "description": "User ID",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "QR code generated successfully"
+                    }
+                },
+                "tags": [
+                    "Qr Campaign"
+                ]
+            }
+        }
+    },
+    "info": {
+        "title": "DOOH API",
+        "description": "The DOOH API Documentation",
+        "version": "1.0",
+        "contact": {}
+    },
+    "tags": [],
+    "servers": [],
+    "components": {
+        "securitySchemes": {
+            "access-token": {
+                "scheme": "bearer",
+                "bearerFormat": "JWT",
+                "type": "http",
+                "in": "header"
+            }
+        },
+        "schemas": {
+            "LoginUserDto": {
+                "type": "object",
+                "properties": {}
+            },
+            "LocationDetails": {
+                "type": "object",
+                "properties": {
+                    "lat": {
+                        "type": "string",
+                        "description": "Latitude of the device location",
+                        "example": "40.712776"
+                    },
+                    "long": {
+                        "type": "string",
+                        "description": "Longitude of the device location",
+                        "example": "-74.005974"
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "Name of the device location",
+                        "example": "New York"
+                    }
+                },
+                "required": [
+                    "lat",
+                    "long",
+                    "name"
+                ]
+            },
+            "RegisterDeviceDto": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number",
+                        "description": "Unique identifier for the device"
+                    },
+                    "macId": {
+                        "type": "string",
+                        "description": "MAC address of the device",
+                        "example": "00:1B:44:11:3A:B7"
+                    },
+                    "orientation": {
+                        "type": "string",
+                        "description": "Orientation of the device",
+                        "example": "landscape"
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "Name of the device",
+                        "example": "Device 1"
+                    },
+                    "description": {
+                        "type": "string",
+                        "description": "Description of the device",
+                        "example": "Main lobby display"
+                    },
+                    "location": {
+                        "description": "Location details of the device",
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/LocationDetails"
+                            }
+                        ]
+                    },
+                    "code": {
+                        "type": "number",
+                        "description": "6-digit code for device authentication",
+                        "example": 123456
+                    },
+                    "imageURL": {
+                        "type": "string",
+                        "description": "URL of the device image",
+                        "example": "http://example.com/device-image.png"
+                    },
+                    "locationName": {
+                        "type": "string",
+                        "description": "Name of the device location",
+                        "example": "Main Lobby"
+                    },
+                    "cps": {
+                        "type": "number",
+                        "description": "CPS value of the device",
+                        "example": 50
+                    }
+                },
+                "required": [
+                    "orientation",
+                    "location",
+                    "code",
+                    "imageURL",
+                    "locationName",
+                    "cps"
+                ]
+            },
+            "CreateAdDto": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number",
+                        "description": "Unique identifier for the ad"
+                    },
+                    "url": {
+                        "type": "string",
+                        "description": "URL of the ad",
+                        "example": "http://example.com/ad"
+                    },
+                    "duration": {
+                        "type": "number",
+                        "description": "Duration of the ad in seconds",
+                        "example": 30
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "Name of the ad",
+                        "example": "Summer Sale Ad"
+                    },
+                    "resolution": {
+                        "type": "string",
+                        "description": "Resolution of the ad",
+                        "example": "1920x1080"
+                    },
+                    "createdBy": {
+                        "type": "number",
+                        "description": "ID of the user who created the ad",
+                        "example": 1
+                    },
+                    "updatedBy": {
+                        "type": "number",
+                        "description": "ID of the user who last updated the ad",
+                        "example": 2
+                    },
+                    "campaignId": {
+                        "type": "number",
+                        "description": "ID of the associated campaign",
+                        "example": 1
+                    },
+                    "thumbnail": {
+                        "type": "string",
+                        "description": "Thumbnail image URL of the ad",
+                        "example": "http://example.com/thumbnail.png"
+                    },
+                    "image": {
+                        "type": "string",
+                        "description": "Image URL of the ad",
+                        "example": "http://example.com/image.png"
+                    }
+                },
+                "required": [
+                    "url",
+                    "duration",
+                    "name",
+                    "resolution",
+                    "createdBy",
+                    "updatedBy",
+                    "campaignId",
+                    "thumbnail"
+                ]
+            },
+            "CreateCampaignDTO": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number",
+                        "description": "Optional ID of the campaign"
+                    },
+                    "campaignType": {
+                        "type": "string",
+                        "enum": [
+                            "PROMOTION",
+                            "REGULAR"
+                        ],
+                        "description": "Type of the campaign"
+                    },
+                    "qrSize": {
+                        "type": "string",
+                        "enum": [
+                            "SMALL",
+                            "MEDIUM",
+                            "LARGE"
+                        ],
+                        "description": "Size of the QR code"
+                    },
+                    "qrPosition": {
+                        "type": "string",
+                        "enum": [
+                            "LEFT",
+                            "RIGHT",
+                            "CENTER"
+                        ],
+                        "description": "Position of the QR code"
+                    },
+                    "adType": {
+                        "type": "string",
+                        "enum": [
+                            "IMAGE",
+                            "VIDEO"
+                        ],
+                        "description": "Type of the ad"
+                    },
+                    "adUrl": {
+                        "type": "string",
+                        "description": "URL of the ad"
+                    },
+                    "duration": {
+                        "type": "number",
+                        "description": "Duration of the ad"
+                    },
+                    "resolution": {
+                        "type": "string",
+                        "description": "Resolution of the ad"
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "Name of the campaign"
+                    },
+                    "description": {
+                        "type": "string",
+                        "description": "Description of the campaign"
+                    },
+                    "startDate": {
+                        "format": "date-time",
+                        "type": "string",
+                        "description": "Start date of the campaign"
+                    },
+                    "endDate": {
+                        "format": "date-time",
+                        "type": "string",
+                        "description": "End date of the campaign"
+                    },
+                    "timeslots": {
+                        "type": "object",
+                        "description": "Timeslots for the campaign",
+                        "example": [
+                            [
+                                0,
+                                1,
+                                0,
+                                0,
+                                0
+                            ],
+                            [
+                                0,
+                                1,
+                                0,
+                                0,
+                                1
+                            ]
+                        ]
+                    },
+                    "triggerMessageLine": {
+                        "type": "string",
+                        "description": "Trigger message line"
+                    },
+                    "availableCoupons": {
+                        "type": "number",
+                        "description": "Number of available coupons"
+                    },
+                    "displayBooking": {
+                        "description": "Display booking information",
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "updatedBy": {
+                        "type": "number",
+                        "description": "ID of the user who updated the campaign"
+                    },
+                    "webIntro": {
+                        "type": "string",
+                        "description": "Web introduction for the campaign"
+                    },
+                    "webDescription": {
+                        "type": "string",
+                        "description": "Web description for the campaign"
+                    },
+                    "webTitle": {
+                        "type": "string",
+                        "description": "Web title for the campaign"
+                    },
+                    "qrCampaignType": {
+                        "type": "string",
+                        "enum": [
+                            "LINE",
+                            "WHATSAPP",
+                            "WEB"
+                        ],
+                        "description": "Type of the QR campaign"
+                    }
+                },
+                "required": [
+                    "campaignType",
+                    "qrSize",
+                    "qrPosition",
+                    "adType",
+                    "adUrl",
+                    "duration",
+                    "resolution",
+                    "name",
+                    "description",
+                    "startDate",
+                    "endDate",
+                    "timeslots",
+                    "displayBooking"
+                ]
+            },
+            "RedeemCoupounDTO": {
+                "type": "object",
+                "properties": {
+                    "campaignId": {
+                        "type": "string",
+                        "description": "ID of the campaign"
+                    },
+                    "custId": {
+                        "type": "string",
+                        "description": "ID of the customer"
+                    }
+                },
+                "required": [
+                    "campaignId",
+                    "custId"
+                ]
+            }
+        }
+    }
+}
