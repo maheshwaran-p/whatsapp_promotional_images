@@ -22,9 +22,9 @@ function renderAd() {
     }
 
     // Apply styles to the ad element
-    adElement.style.background = '#ebf7f9';
-    adElement.style.border = '1px solid #ccc';
-    adElement.style.padding = '10px';
+    // adElement.style.background = '#ebf7f9';
+    // adElement.style.border = '1px solid #ccc';
+    // adElement.style.padding = '10px';
 
     // Ad creative (image)
 
