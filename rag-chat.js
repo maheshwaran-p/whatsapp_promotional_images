@@ -150,7 +150,7 @@ async function main() {
       chatHistory.push(new AIMessage(response));
     }
   } catch (error) {
-    console.error('Error:', error)
+    console.error('Error:::', error)
   }
 }
 
