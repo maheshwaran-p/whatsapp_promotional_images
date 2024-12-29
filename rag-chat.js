@@ -15,7 +15,7 @@ const __dirname = dirname(__filename);
 
 dotenv.config();
 
-const RAG_STORE_PATH = path.join(__dirname, 'rag-store');
+const RAG_STORE_PATH = path.join(__dirname, 'rag-store')
 
 class LocalEmbeddings {
   constructor() {
