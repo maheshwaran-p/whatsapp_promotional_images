@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>C1X Digital Out of Home API</title>
+  <!-- needed for adaptive design -->
+  <meta charset="utf-8" />
+  <link rel="icon" href="c1x.png" type="image/gif" sizes="30x30">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,700|Roboto:300,400,700" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    h2 {
+      margin: 0 !important;
+    }
+
+    .bold {
+      font-weight: bold !important;
+    }
+  </style>
+</head>
+
+<body>
+  <script src="https://cdn.redoc.ly/redoc/latest/bundles/redoc.standalone.js"> </script>
+  <div id="redoc-container"></div>
+
+  <script>
+    Redoc.init('swagger.json', {
+      expandResponses: "200,400",
+      theme: {
+        spacing: {
+          sectionVertical: 20
+        }
+      }
+    }, document.getElementById('redoc-container'), function () {
+      const boldHeadings = [
+        'Authentication & Authorization',
+        'Devices',
+        'Ads',
+        'Campaigns',
+        'QR Code'
+      ]
+      const allHeadings = document.getElementsByTagName("h2");
+      for (let heading of allHeadings) {
+        let text = heading.innerText
+        if (boldHeadings.includes(text)) {
+          heading.className += ' bold'
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>

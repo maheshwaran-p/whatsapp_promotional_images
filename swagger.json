@@ -1,1014 +1,2092 @@
 {
-    "openapi": "3.0.0",
-    "paths": {
-        "/auth/login": {
-            "post": {
-                "operationId": "AuthController_login",
-                "summary": "Login a user.",
-                "description": "This operation authenticates a user, creates a session and returns an user object containing a JWT token",
-                "parameters": [],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/LoginUserDto"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "description": ""
-                    }
-                },
-                "tags": [
-                    "Authentication & Authorization"
-                ]
+  "openapi": "3.0.0",
+  "paths": {
+    "/auth/login": {
+      "post": {
+        "operationId": "AuthController_login",
+        "summary": "Login a user",
+        "description": "This operation authenticates a user, creates a session and returns a user object containing a JWT token",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginUserDto"
+              }
             }
+          }
         },
-        "/device/register": {
-            "post": {
-                "operationId": "DeviceController_registerDevice",
-                "summary": "Register a new device",
-                "parameters": [],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/RegisterDeviceDto"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "description": "Device registered successfully"
-                    }
-                },
-                "tags": [
-                    "Device"
-                ],
-                "security": [
-                    {
-                        "access-token": []
-                    }
-                ]
+        "responses": {
+          "200": {
+            "description": "Logged in successfully!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginResponseDto"
+                }
+              }
             }
+          },
+          "400": {
+            "description": "Invalid credentials",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestExceptionResDTO"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "User unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedExceptionResDTO"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFoundExceptionResDTO"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too many attempts",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TooManyRequest"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerErrorExceptionResDTO"
+                }
+              }
+            }
+          }
         },
-        "/device/check-code": {
-            "get": {
-                "operationId": "DeviceController_validateCode",
-                "summary": "Check the validity of a 6-digit code",
-                "description": "Authenticates a user, creates a session, and returns a user object containing a JWT token",
-                "parameters": [
-                    {
-                        "name": "code",
-                        "required": true,
-                        "in": "query",
-                        "schema": {
-                            "type": "number"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Code validated successfully"
-                    }
-                },
-                "tags": [
-                    "Device"
-                ],
-                "security": [
-                    {
-                        "access-token": []
-                    }
-                ]
-            }
-        },
-        "/device": {
-            "get": {
-                "operationId": "DeviceController_getdevices",
-                "summary": "Get the list of devices",
-                "description": "API that sends the list of all active-inactive devices",
-                "parameters": [],
-                "responses": {
-                    "200": {
-                        "description": "List of devices retrieved successfully"
-                    }
-                },
-                "tags": [
-                    "Device"
-                ],
-                "security": [
-                    {
-                        "access-token": []
-                    }
-                ]
-            }
-        },
-        "/device/{id}": {
-            "get": {
-                "operationId": "DeviceController_getdevicesById",
-                "summary": "Get the details of a device",
-                "description": "API to get the details of a device",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "required": true,
-                        "in": "path",
-                        "description": "ID of the device",
-                        "schema": {
-                            "type": "number"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Device details retrieved successfully"
-                    },
-                    "403": {
-                        "description": "Only Admin can access device details"
-                    }
-                },
-                "tags": [
-                    "Device"
-                ],
-                "security": [
-                    {
-                        "access-token": []
-                    }
-                ]
-            }
-        },
-        "/ad": {
-            "post": {
-                "operationId": "AdController_create",
-                "summary": "Create a new ad",
-                "parameters": [],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/CreateAdDto"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "description": "Ad created successfully"
-                    }
-                },
-                "tags": [
-                    "Ad/Creative"
-                ],
-                "security": [
-                    {
-                        "access-token": []
-                    }
-                ]
-            },
-            "get": {
-                "operationId": "AdController_get",
-                "summary": "Get all ads",
-                "parameters": [],
-                "responses": {
-                    "200": {
-                        "description": "List of all ads retrieved successfully"
-                    }
-                },
-                "tags": [
-                    "Ad/Creative"
-                ],
-                "security": [
-                    {
-                        "access-token": []
-                    }
-                ]
-            }
-        },
-        "/ad/{id}": {
-            "patch": {
-                "operationId": "AdController_update",
-                "summary": "Update an ad",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "required": true,
-                        "in": "path",
-                        "description": "ID of the ad",
-                        "schema": {
-                            "type": "number"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/CreateAdDto"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Ad updated successfully"
-                    }
-                },
-                "tags": [
-                    "Ad/Creative"
-                ],
-                "security": [
-                    {
-                        "access-token": []
-                    }
-                ]
-            },
-            "delete": {
-                "operationId": "AdController_delete",
-                "summary": "Delete an ad",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "required": true,
-                        "in": "path",
-                        "description": "ID of the ad",
-                        "schema": {
-                            "type": "number"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Ad deleted successfully"
-                    }
-                },
-                "tags": [
-                    "Ad/Creative"
-                ],
-                "security": [
-                    {
-                        "access-token": []
-                    }
-                ]
-            },
-            "get": {
-                "operationId": "AdController_getadById",
-                "summary": "Get ad details by ID",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "required": true,
-                        "in": "path",
-                        "description": "ID of the ad",
-                        "schema": {
-                            "type": "number"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Ad details retrieved successfully"
-                    }
-                },
-                "tags": [
-                    "Ad/Creative"
-                ],
-                "security": [
-                    {
-                        "access-token": []
-                    }
-                ]
-            }
-        },
-        "/campaign": {
-            "post": {
-                "operationId": "CampaignController_createCampaign",
-                "summary": "Create a new campaign",
-                "parameters": [],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/CreateCampaignDTO"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "description": "Campaign created successfully"
-                    }
-                },
-                "tags": [
-                    "Campaign Management"
-                ],
-                "security": [
-                    {
-                        "access-token": []
-                    }
-                ]
-            },
-            "get": {
-                "operationId": "CampaignController_getCampaign",
-                "summary": "Get all campaigns",
-                "parameters": [],
-                "responses": {
-                    "200": {
-                        "description": "Campaigns retrieved successfully"
-                    }
-                },
-                "tags": [
-                    "Campaign Management"
-                ],
-                "security": [
-                    {
-                        "access-token": []
-                    }
-                ]
-            }
-        },
-        "/campaign/redeem": {
-            "post": {
-                "operationId": "CampaignController_redeemCampaign",
-                "summary": "Redeem a campaign coupon",
-                "parameters": [],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/RedeemCoupounDTO"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Coupon redeemed successfully"
-                    }
-                },
-                "tags": [
-                    "Campaign Management"
-                ],
-                "security": [
-                    {
-                        "access-token": []
-                    }
-                ]
-            }
-        },
-        "/campaign/validate-mssg/{mssg}": {
-            "get": {
-                "operationId": "CampaignController_validateTriggerMessage",
-                "summary": "Validate a trigger message",
-                "parameters": [
-                    {
-                        "name": "mssg",
-                        "required": true,
-                        "in": "path",
-                        "description": "The message to validate",
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Message validated successfully"
-                    }
-                },
-                "tags": [
-                    "Campaign Management"
-                ],
-                "security": [
-                    {
-                        "access-token": []
-                    }
-                ]
-            }
-        },
-        "/campaign/approve/{id}": {
-            "post": {
-                "operationId": "CampaignController_approveCampaign",
-                "summary": "Approve a campaign",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "required": true,
-                        "in": "path",
-                        "description": "The ID of the campaign to approve",
-                        "schema": {
-                            "type": "number"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Campaign approved successfully"
-                    }
-                },
-                "tags": [
-                    "Campaign Management"
-                ],
-                "security": [
-                    {
-                        "access-token": []
-                    }
-                ]
-            }
-        },
-        "/campaign/{id}": {
-            "get": {
-                "operationId": "CampaignController_getCampaignById",
-                "summary": "Get a campaign by ID",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "required": true,
-                        "in": "path",
-                        "description": "The ID of the campaign",
-                        "schema": {
-                            "type": "number"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Campaign retrieved successfully"
-                    }
-                },
-                "tags": [
-                    "Campaign Management"
-                ],
-                "security": [
-                    {
-                        "access-token": []
-                    }
-                ]
-            },
-            "patch": {
-                "operationId": "CampaignController_update",
-                "summary": "Update a campaign",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "required": true,
-                        "in": "path",
-                        "description": "The ID of the campaign to update",
-                        "schema": {
-                            "type": "number"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "required": true,
-                    "description": "The updated campaign data",
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "type": "string"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Campaign updated successfully"
-                    }
-                },
-                "tags": [
-                    "Campaign Management"
-                ],
-                "security": [
-                    {
-                        "access-token": []
-                    }
-                ]
-            },
-            "delete": {
-                "operationId": "CampaignController_delete",
-                "summary": "Delete a campaign",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "required": true,
-                        "in": "path",
-                        "description": "The ID of the campaign to delete",
-                        "schema": {
-                            "type": "number"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Campaign deleted successfully"
-                    }
-                },
-                "tags": [
-                    "Campaign Management"
-                ],
-                "security": [
-                    {
-                        "access-token": []
-                    }
-                ]
-            }
-        },
-        "/campaign/metrics/{id}": {
-            "get": {
-                "operationId": "CampaignController_getCampaignMetricsById",
-                "summary": "Get campaign metrics by ID",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "required": true,
-                        "in": "path",
-                        "description": "The ID of the campaign",
-                        "schema": {
-                            "type": "number"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Campaign metrics retrieved successfully"
-                    }
-                },
-                "tags": [
-                    "Campaign Management"
-                ],
-                "security": [
-                    {
-                        "access-token": []
-                    }
-                ]
-            }
-        },
-        "/bot/search/{uuid}": {
-            "get": {
-                "operationId": "QrController_searchByUUID",
-                "summary": "Search campaign by UUID",
-                "parameters": [
-                    {
-                        "name": "uuid",
-                        "required": true,
-                        "in": "path",
-                        "description": "UUID of the campaign",
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Campaign retrieved successfully"
-                    },
-                    "404": {
-                        "description": "Campaign not found"
-                    }
-                },
-                "tags": [
-                    "Qr Campaign"
-                ]
-            }
-        },
-        "/bot/line/coupon": {
-            "post": {
-                "operationId": "QrController_generateLineQrLink",
-                "summary": "Generate LINE QR link for a coupon",
-                "parameters": [],
-                "responses": {
-                    "201": {
-                        "description": "LINE QR link generated successfully"
-                    }
-                },
-                "tags": [
-                    "Qr Campaign"
-                ],
-                "security": [
-                    {
-                        "access-token": []
-                    }
-                ]
-            }
-        },
-        "/bot/browser/coupon/{userId}/{campaignId}": {
-            "get": {
-                "operationId": "QrController_generateBrowserQrLink",
-                "summary": "Generate browser QR link for a coupon",
-                "parameters": [
-                    {
-                        "name": "userId",
-                        "required": true,
-                        "in": "path",
-                        "description": "User ID",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "campaignId",
-                        "required": true,
-                        "in": "path",
-                        "description": "Campaign ID",
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Browser QR link generated successfully"
-                    }
-                },
-                "tags": [
-                    "Qr Campaign"
-                ]
-            }
-        },
-        "/bot/qr-code/{userId}/{campaignId}": {
-            "get": {
-                "operationId": "QrController_generateQrCode",
-                "summary": "Generate QR code",
-                "parameters": [
-                    {
-                        "name": "campaignId",
-                        "required": true,
-                        "in": "path",
-                        "description": "Campaign ID",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "userId",
-                        "required": true,
-                        "in": "path",
-                        "description": "User ID",
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "QR code generated successfully"
-                    }
-                },
-                "tags": [
-                    "Qr Campaign"
-                ]
-            }
-        }
+        "tags": [
+          "Authentication & Authorization"
+        ]
+      }
     },
-    "info": {
-        "title": "DOOH API",
-        "description": "The DOOH API Documentation",
-        "version": "1.0",
-        "contact": {}
-    },
-    "tags": [],
-    "servers": [],
-    "components": {
-        "securitySchemes": {
-            "access-token": {
-                "scheme": "bearer",
-                "bearerFormat": "JWT",
-                "type": "http",
-                "in": "header"
+    "/auth/forgot-password": {
+      "post": {
+        "operationId": "AuthController_forgotPassword",
+        "summary": "Forgot Password",
+        "description": "Trigger a password reset email",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ForgotPasswordDTO"
+              }
             }
+          }
         },
-        "schemas": {
-            "LoginUserDto": {
-                "type": "object",
-                "properties": {}
-            },
-            "LocationDetails": {
-                "type": "object",
-                "properties": {
-                    "lat": {
-                        "type": "string",
-                        "description": "Latitude of the device location",
-                        "example": "40.712776"
-                    },
-                    "long": {
-                        "type": "string",
-                        "description": "Longitude of the device location",
-                        "example": "-74.005974"
-                    },
-                    "name": {
-                        "type": "string",
-                        "description": "Name of the device location",
-                        "example": "New York"
-                    }
-                },
-                "required": [
-                    "lat",
-                    "long",
-                    "name"
-                ]
-            },
-            "RegisterDeviceDto": {
-                "type": "object",
-                "properties": {
-                    "id": {
-                        "type": "number",
-                        "description": "Unique identifier for the device"
-                    },
-                    "macId": {
-                        "type": "string",
-                        "description": "MAC address of the device",
-                        "example": "00:1B:44:11:3A:B7"
-                    },
-                    "orientation": {
-                        "type": "string",
-                        "description": "Orientation of the device",
-                        "example": "landscape"
-                    },
-                    "name": {
-                        "type": "string",
-                        "description": "Name of the device",
-                        "example": "Device 1"
-                    },
-                    "description": {
-                        "type": "string",
-                        "description": "Description of the device",
-                        "example": "Main lobby display"
-                    },
-                    "location": {
-                        "description": "Location details of the device",
-                        "allOf": [
-                            {
-                                "$ref": "#/components/schemas/LocationDetails"
-                            }
-                        ]
-                    },
-                    "code": {
-                        "type": "number",
-                        "description": "6-digit code for device authentication",
-                        "example": 123456
-                    },
-                    "imageURL": {
-                        "type": "string",
-                        "description": "URL of the device image",
-                        "example": "http://example.com/device-image.png"
-                    },
-                    "locationName": {
-                        "type": "string",
-                        "description": "Name of the device location",
-                        "example": "Main Lobby"
-                    },
-                    "cps": {
-                        "type": "number",
-                        "description": "CPS value of the device",
-                        "example": 50
-                    }
-                },
-                "required": [
-                    "orientation",
-                    "location",
-                    "code",
-                    "imageURL",
-                    "locationName",
-                    "cps"
-                ]
-            },
-            "CreateAdDto": {
-                "type": "object",
-                "properties": {
-                    "id": {
-                        "type": "number",
-                        "description": "Unique identifier for the ad"
-                    },
-                    "url": {
-                        "type": "string",
-                        "description": "URL of the ad",
-                        "example": "http://example.com/ad"
-                    },
-                    "duration": {
-                        "type": "number",
-                        "description": "Duration of the ad in seconds",
-                        "example": 30
-                    },
-                    "name": {
-                        "type": "string",
-                        "description": "Name of the ad",
-                        "example": "Summer Sale Ad"
-                    },
-                    "resolution": {
-                        "type": "string",
-                        "description": "Resolution of the ad",
-                        "example": "1920x1080"
-                    },
-                    "createdBy": {
-                        "type": "number",
-                        "description": "ID of the user who created the ad",
-                        "example": 1
-                    },
-                    "updatedBy": {
-                        "type": "number",
-                        "description": "ID of the user who last updated the ad",
-                        "example": 2
-                    },
-                    "campaignId": {
-                        "type": "number",
-                        "description": "ID of the associated campaign",
-                        "example": 1
-                    },
-                    "thumbnail": {
-                        "type": "string",
-                        "description": "Thumbnail image URL of the ad",
-                        "example": "http://example.com/thumbnail.png"
-                    },
-                    "image": {
-                        "type": "string",
-                        "description": "Image URL of the ad",
-                        "example": "http://example.com/image.png"
-                    }
-                },
-                "required": [
-                    "url",
-                    "duration",
-                    "name",
-                    "resolution",
-                    "createdBy",
-                    "updatedBy",
-                    "campaignId",
-                    "thumbnail"
-                ]
-            },
-            "CreateCampaignDTO": {
-                "type": "object",
-                "properties": {
-                    "id": {
-                        "type": "number",
-                        "description": "Optional ID of the campaign"
-                    },
-                    "campaignType": {
-                        "type": "string",
-                        "enum": [
-                            "PROMOTION",
-                            "REGULAR"
-                        ],
-                        "description": "Type of the campaign"
-                    },
-                    "qrSize": {
-                        "type": "string",
-                        "enum": [
-                            "SMALL",
-                            "MEDIUM",
-                            "LARGE"
-                        ],
-                        "description": "Size of the QR code"
-                    },
-                    "qrPosition": {
-                        "type": "string",
-                        "enum": [
-                            "LEFT",
-                            "RIGHT",
-                            "CENTER"
-                        ],
-                        "description": "Position of the QR code"
-                    },
-                    "adType": {
-                        "type": "string",
-                        "enum": [
-                            "IMAGE",
-                            "VIDEO"
-                        ],
-                        "description": "Type of the ad"
-                    },
-                    "adUrl": {
-                        "type": "string",
-                        "description": "URL of the ad"
-                    },
-                    "duration": {
-                        "type": "number",
-                        "description": "Duration of the ad"
-                    },
-                    "resolution": {
-                        "type": "string",
-                        "description": "Resolution of the ad"
-                    },
-                    "name": {
-                        "type": "string",
-                        "description": "Name of the campaign"
-                    },
-                    "description": {
-                        "type": "string",
-                        "description": "Description of the campaign"
-                    },
-                    "startDate": {
-                        "format": "date-time",
-                        "type": "string",
-                        "description": "Start date of the campaign"
-                    },
-                    "endDate": {
-                        "format": "date-time",
-                        "type": "string",
-                        "description": "End date of the campaign"
-                    },
-                    "timeslots": {
-                        "type": "object",
-                        "description": "Timeslots for the campaign",
-                        "example": [
-                            [
-                                0,
-                                1,
-                                0,
-                                0,
-                                0
-                            ],
-                            [
-                                0,
-                                1,
-                                0,
-                                0,
-                                1
-                            ]
-                        ]
-                    },
-                    "triggerMessageLine": {
-                        "type": "string",
-                        "description": "Trigger message line"
-                    },
-                    "availableCoupons": {
-                        "type": "number",
-                        "description": "Number of available coupons"
-                    },
-                    "displayBooking": {
-                        "description": "Display booking information",
-                        "type": "array",
-                        "items": {
-                            "type": "string"
-                        }
-                    },
-                    "updatedBy": {
-                        "type": "number",
-                        "description": "ID of the user who updated the campaign"
-                    },
-                    "webIntro": {
-                        "type": "string",
-                        "description": "Web introduction for the campaign"
-                    },
-                    "webDescription": {
-                        "type": "string",
-                        "description": "Web description for the campaign"
-                    },
-                    "webTitle": {
-                        "type": "string",
-                        "description": "Web title for the campaign"
-                    },
-                    "qrCampaignType": {
-                        "type": "string",
-                        "enum": [
-                            "LINE",
-                            "WHATSAPP",
-                            "WEB"
-                        ],
-                        "description": "Type of the QR campaign"
-                    }
-                },
-                "required": [
-                    "campaignType",
-                    "qrSize",
-                    "qrPosition",
-                    "adType",
-                    "adUrl",
-                    "duration",
-                    "resolution",
-                    "name",
-                    "description",
-                    "startDate",
-                    "endDate",
-                    "timeslots",
-                    "displayBooking"
-                ]
-            },
-            "RedeemCoupounDTO": {
-                "type": "object",
-                "properties": {
-                    "campaignId": {
-                        "type": "string",
-                        "description": "ID of the campaign"
-                    },
-                    "custId": {
-                        "type": "string",
-                        "description": "ID of the customer"
-                    }
-                },
-                "required": [
-                    "campaignId",
-                    "custId"
-                ]
+        "responses": {
+          "200": {
+            "description": "Reset email sent successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForgotPasswordResponseDto"
+                }
+              }
             }
-        }
+          },
+          "400": {
+            "description": "Invalid email",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestExceptionResDTO"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFoundExceptionResDTO"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerErrorExceptionResDTO"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Authentication & Authorization"
+        ]
+      }
+    },
+    "/auth/change-password": {
+      "post": {
+        "operationId": "AuthController_changePassword",
+        "summary": "Change Password",
+        "description": "Change user password with validation",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChangePasswordDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Password changed successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChangePasswordResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid password format",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestExceptionResDTO"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedExceptionResDTO"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerErrorExceptionResDTO"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Authentication & Authorization"
+        ],
+        "security": [
+          {
+            "access-token": []
+          }
+        ]
+      }
+    },
+    "/am/accounts": {
+      "get": {
+        "operationId": "AccountController_list",
+        "summary": "List Accounts",
+        "description": "List all accounts created by the current user.\n    - Supports pagination\n    - Supports filtering and sorting\n    - Returns managed accounts based on user type\n    - Includes parent account details for hierarchy",
+        "parameters": [
+          {
+            "name": "filter",
+            "required": false,
+            "in": "query",
+            "description": "Filter format: {\n      where: [\n        { \n          isSearch: boolean,\n          key: string,\n          value: any\n        }\n      ],\n      orderBy: \"property_name ASC | DESC\"\n    }",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "parentId",
+            "required": false,
+            "in": "query",
+            "description": "Filter by parent account ID",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "description": "Items per page (default: 10)",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "description": "Page number (default: 1)",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of accounts retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccountListResponseDTO"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized access",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedExceptionResDTO"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden - insufficient permissions",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForbiddenExceptionResDTO"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerErrorExceptionResDTO"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Account Management"
+        ],
+        "security": [
+          {
+            "access-token": []
+          }
+        ]
+      }
+    },
+    "/am/account/{id}": {
+      "get": {
+        "operationId": "AccountController_getAccountDetail",
+        "summary": "View Account Details",
+        "description": "Get detailed information about a specific account",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "Account ID to retrieve",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Account details retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccountResponseDTO"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid account ID",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestExceptionResDTO"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized access",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedExceptionResDTO"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Account not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFoundExceptionResDTO"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Account Management"
+        ],
+        "security": [
+          {
+            "access-token": []
+          }
+        ]
+      },
+      "patch": {
+        "operationId": "AccountController_updateAccount",
+        "summary": "Update Account",
+        "description": "Update an existing account.\n    - Validates account name uniqueness\n    - Updates modifiedBy and modifiedAt\n    - Maintains account hierarchy",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "Account ID to update",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AccountUpdateDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Account updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccountUpdateResponseDTO"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestExceptionResDTO"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Duplicate account name",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForbiddenExceptionResDTO"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Account Management"
+        ],
+        "security": [
+          {
+            "access-token": []
+          }
+        ]
+      }
+    },
+    "/am/account": {
+      "post": {
+        "operationId": "AccountController_create",
+        "summary": "Create Account",
+        "description": "Create a new child account under the current user account.\n    - Validates account name uniqueness\n    - Sets up parent-child relationship\n    - Inherits currency and timezone from parent\n    - Updates managed accounts cache",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AccountCreateDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Account created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccountCreateResponseDTO"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestExceptionResDTO"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Duplicate account name",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForbiddenExceptionResDTO"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Account Management"
+        ],
+        "security": [
+          {
+            "access-token": []
+          }
+        ]
+      }
+    },
+    "/am/users": {
+      "get": {
+        "operationId": "UserController_listAccountUsers",
+        "summary": "List Users",
+        "description": "Retrieve a paginated list of users.\n    - Supports filtering and sorting\n    - Includes role information\n    - Supports search by name\n    - Returns active users by default",
+        "parameters": [
+          {
+            "name": "filter",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of users with pagination metadata",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserListResponseDTO"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized access",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedExceptionResDTO"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden - insufficient permissions",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForbiddenExceptionResDTO"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "User Management"
+        ],
+        "security": [
+          {
+            "access-token": []
+          }
+        ]
+      }
+    },
+    "/am/user/{id}": {
+      "get": {
+        "operationId": "UserController_getUserById",
+        "summary": "Get User Details",
+        "description": "Retrieve detailed information about a specific user",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User details retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserViewResponseDTO"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid user ID or user not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestExceptionResDTO"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "User Management"
+        ],
+        "security": [
+          {
+            "access-token": []
+          }
+        ]
+      },
+      "patch": {
+        "operationId": "UserController_updateUser",
+        "summary": "Update User",
+        "description": "Update an existing user's information",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserUpdateDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User information updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserUpdateResponseDTO"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input data or user not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestExceptionResDTO"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "User Management"
+        ],
+        "security": [
+          {
+            "access-token": []
+          }
+        ]
+      },
+      "delete": {
+        "operationId": "UserController_deleteUser",
+        "summary": "Delete User",
+        "description": "Soft delete a user from the system",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User deleted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserDeleteResponseDTO"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Cannot delete self or insufficient permissions",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForbiddenExceptionResDTO"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "User Management"
+        ],
+        "security": [
+          {
+            "access-token": []
+          }
+        ]
+      }
+    },
+    "/am/user": {
+      "post": {
+        "operationId": "UserController_createUser",
+        "summary": "Create User",
+        "description": "Create and invite a new user",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InviteUserDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "User created and invitation sent",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserCreateResponseDTO"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input data or role not specified",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestExceptionResDTO"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Email already exists",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForbiddenExceptionResDTO"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "User Management"
+        ],
+        "security": [
+          {
+            "access-token": []
+          }
+        ]
+      }
+    },
+    "/am/user/status/{id}": {
+      "patch": {
+        "operationId": "UserController_updateStatus",
+        "summary": "Update User Status",
+        "description": "Update user's active/inactive status",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserStatusUpdateDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User status updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserStatusUpdateResponseDTO"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid status or user not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestExceptionResDTO"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "User Management"
+        ],
+        "security": [
+          {
+            "access-token": []
+          }
+        ]
+      }
+    },
+    "/module/get-module": {
+      "get": {
+        "operationId": "ModuleController_listModules",
+        "summary": "List Modules & Capabilities",
+        "description": "Retrieve all system modules and their capabilities.\n    - Returns complete module hierarchy\n    - Includes all available capabilities\n    - Used for role management\n    - Required for permission setup",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "List of modules with their capabilities",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ModuleResponseDTO"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized access",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedExceptionResDTO"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Module Management"
+        ],
+        "security": [
+          {
+            "access-token": []
+          }
+        ]
+      }
+    },
+    "/am/roles": {
+      "get": {
+        "operationId": "RoleController_listRoles",
+        "summary": "List Roles",
+        "description": "Retrieve paginated list of roles.\n    - Includes role capabilities\n    - Supports filtering and sorting\n    - Returns active roles by default\n    - Supports search by role name",
+        "parameters": [
+          {
+            "name": "filter",
+            "required": false,
+            "in": "query",
+            "description": "Filter format: {\n      where: [\n        {\n          isSearch: boolean,\n          key: string,\n          value: any\n        }\n      ],\n      orderBy: \"property_name ASC | DESC\"\n    }",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "description": "Items per page (default: 10)",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "description": "Page number (default: 1)",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of roles retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RoleListResponseDTO"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized access",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedExceptionResDTO"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Role Management"
+        ],
+        "security": [
+          {
+            "access-token": []
+          }
+        ]
+      }
+    },
+    "/am/role/{id}": {
+      "get": {
+        "operationId": "RoleController_viewRole",
+        "summary": "View Role Details",
+        "description": "Get detailed information about a specific role.\n    - Includes all role capabilities\n    - Shows permission settings\n    - Validates role access",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "Role ID to retrieve",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Role details retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RoleResponseDTO"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Role not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestExceptionResDTO"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Role Management"
+        ],
+        "security": [
+          {
+            "access-token": []
+          }
+        ]
+      }
+    },
+    "/am/role": {
+      "post": {
+        "operationId": "RoleController_createRole",
+        "summary": "Create Role",
+        "description": "Create a new role with capabilities.\n    - Assigns role capabilities\n    - Validates role name uniqueness\n    - Creates role-capability mappings\n    - Maintains creation audit",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RoleCreateDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Role created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RoleCreateResponseDTO"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestExceptionResDTO"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Role name already exists",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForbiddenExceptionResDTO"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Role Management"
+        ],
+        "security": [
+          {
+            "access-token": []
+          }
+        ]
+      }
+    },
+    "/am/role/{roleID}": {
+      "patch": {
+        "operationId": "RoleController_updateRole",
+        "summary": "Update Role",
+        "description": "Update an existing role.\n    - Updates role details\n    - Modifies capabilities\n    - Maintains update history\n    - Validates role access",
+        "parameters": [
+          {
+            "name": "roleID",
+            "required": true,
+            "in": "path",
+            "description": "Role ID to update",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RoleCreateDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Role updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RoleUpdateResponseDTO"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Role not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestExceptionResDTO"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Role name already exists",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForbiddenExceptionResDTO"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Role Management"
+        ],
+        "security": [
+          {
+            "access-token": []
+          }
+        ]
+      }
     }
+  },
+  "info": {
+    "title": "PD V2 API",
+    "description": "The PD V2 API Documentation",
+    "version": "1.0",
+    "contact": {},
+    "x-logo": {
+      "url": "pd-logo.png"
+    },
+    "x-tagGroups": [
+      {
+        "name": "Core APIs"
+      }
+    ]
+  },
+  "tags": [
+    {
+      "name": "Authentication",
+      "description": "Authentication and authorization endpoints"
+    }
+  ],
+  "servers": [],
+  "components": {
+    "securitySchemes": {
+      "access-token": {
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "type": "http",
+        "in": "header"
+      }
+    },
+    "schemas": {
+      "LoginUserDto": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "example": "user@example.com",
+            "description": "Email address of the user"
+          },
+          "password": {
+            "type": "string",
+            "example": "Password123!",
+            "description": "User password",
+            "minLength": 8
+          }
+        },
+        "required": [
+          "email",
+          "password"
+        ]
+      },
+      "LoginResponseDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "example": 1
+          },
+          "firstName": {
+            "type": "string",
+            "example": "John"
+          },
+          "lastName": {
+            "type": "string",
+            "example": "Doe"
+          },
+          "isNewUser": {
+            "type": "boolean",
+            "example": false
+          },
+          "preference": {
+            "type": "object",
+            "example": {
+              "theme": "dark",
+              "language": "en"
+            }
+          },
+          "role": {
+            "type": "string",
+            "example": "USER"
+          },
+          "accessToken": {
+            "type": "string",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ..."
+          },
+          "account": {
+            "type": "object",
+            "example": {
+              "id": 1,
+              "status": "ACTIVE",
+              "currency": "USD",
+              "timezone": "UTC"
+            }
+          },
+          "capabilities": {
+            "example": [
+              "READ",
+              "WRITE",
+              "CREATE_CAMPAIGN"
+            ],
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "publisherAccounts": {
+            "example": [
+              1,
+              2,
+              3
+            ],
+            "type": "array",
+            "items": {
+              "type": "number"
+            }
+          },
+          "agencyAccounts": {
+            "example": [
+              4,
+              5,
+              6
+            ],
+            "type": "array",
+            "items": {
+              "type": "number"
+            }
+          },
+          "advertiserAccounts": {
+            "example": [
+              7,
+              8,
+              9
+            ],
+            "type": "array",
+            "items": {
+              "type": "number"
+            }
+          }
+        },
+        "required": [
+          "id",
+          "firstName",
+          "lastName",
+          "isNewUser",
+          "preference",
+          "role",
+          "accessToken",
+          "account",
+          "capabilities",
+          "publisherAccounts",
+          "agencyAccounts",
+          "advertiserAccounts"
+        ]
+      },
+      "BadRequestExceptionResDTO": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "number",
+            "example": 400
+          },
+          "code": {
+            "type": "string",
+            "example": "ERR_BAD_REQUEST"
+          }
+        },
+        "required": [
+          "status",
+          "code"
+        ]
+      },
+      "UnauthorizedExceptionResDTO": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "number",
+            "example": 401
+          },
+          "code": {
+            "type": "string",
+            "example": "ERR_ISE"
+          }
+        },
+        "required": [
+          "status",
+          "code"
+        ]
+      },
+      "NotFoundExceptionResDTO": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "number",
+            "example": 404
+          },
+          "code": {
+            "type": "string",
+            "example": "ERR_NOT_FOUND"
+          },
+          "message": {
+            "type": "string",
+            "example": "The requested resource could not be found."
+          },
+          "support": {
+            "type": "string",
+            "example": "Refer to the API documentation for the correct request format :  http://127.0.0.1:5500/docs/index.html#tag/Authentication-and-Authorization"
+          }
+        },
+        "required": [
+          "status",
+          "code",
+          "message",
+          "support"
+        ]
+      },
+      "TooManyRequest": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "number",
+            "example": 429
+          },
+          "code": {
+            "type": "string",
+            "example": "ERR_TOO_MANY_REQUESTS"
+          },
+          "msg": {
+            "type": "string",
+            "example": "Too Many Request Reached!"
+          }
+        },
+        "required": [
+          "status",
+          "code",
+          "msg"
+        ]
+      },
+      "InternalServerErrorExceptionResDTO": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "number",
+            "example": 500
+          },
+          "code": {
+            "type": "string",
+            "example": "ERR_ISE"
+          },
+          "msg": {
+            "type": "string",
+            "example": "An unexpected error occurred on the server."
+          }
+        },
+        "required": [
+          "status",
+          "code",
+          "msg"
+        ]
+      },
+      "ForgotPasswordDTO": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "example": "user@example.com",
+            "description": "Email address for password reset"
+          }
+        },
+        "required": [
+          "email"
+        ]
+      },
+      "ForgotPasswordResponseDto": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Password reset email sent successfully",
+            "description": "Success message"
+          }
+        },
+        "required": [
+          "message"
+        ]
+      },
+      "ChangePasswordDTO": {
+        "type": "object",
+        "properties": {
+          "oldPassword": {
+            "type": "string",
+            "example": "OldPassword123!",
+            "description": "Current password"
+          },
+          "newPassword": {
+            "type": "string",
+            "example": "NewPassword123!",
+            "description": "New password (must meet password requirements)",
+            "minLength": 8
+          },
+          "confirmPassword": {
+            "type": "string",
+            "example": "NewPassword123!",
+            "description": "Confirm new password (must match new password)"
+          }
+        },
+        "required": [
+          "oldPassword",
+          "newPassword",
+          "confirmPassword"
+        ]
+      },
+      "ChangePasswordResponseDto": {
+        "type": "object",
+        "properties": {
+          "msg": {
+            "type": "string",
+            "example": "success",
+            "description": "Password change status"
+          }
+        },
+        "required": [
+          "msg"
+        ]
+      },
+      "AccountResponseDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "example": 1
+          },
+          "name": {
+            "type": "string",
+            "example": "Agency XYZ"
+          },
+          "type": {
+            "type": "string",
+            "example": "AGENCY"
+          },
+          "status": {
+            "type": "string",
+            "example": "ACTIVE"
+          },
+          "parentId": {
+            "type": "number",
+            "example": 1
+          },
+          "companyId": {
+            "type": "number",
+            "example": 1
+          },
+          "currency": {
+            "type": "string",
+            "example": "USD"
+          },
+          "timezone": {
+            "type": "string",
+            "example": "UTC"
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string",
+            "example": "2024-01-07T12:00:00Z"
+          },
+          "updatedAt": {
+            "format": "date-time",
+            "type": "string",
+            "example": "2024-01-07T12:00:00Z"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "type",
+          "status",
+          "parentId",
+          "companyId",
+          "currency",
+          "timezone",
+          "createdAt",
+          "updatedAt"
+        ]
+      },
+      "AccountListResponseDTO": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "description": "List of accounts",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AccountResponseDTO"
+            }
+          },
+          "meta": {
+            "type": "object",
+            "example": {
+              "totalItems": 20,
+              "itemCount": 10,
+              "itemsPerPage": 10,
+              "totalPages": 2,
+              "currentPage": 1
+            }
+          }
+        },
+        "required": [
+          "items",
+          "meta"
+        ]
+      },
+      "ForbiddenExceptionResDTO": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "number",
+            "example": 403
+          },
+          "code": {
+            "type": "string",
+            "example": "ERR_FORBIDDEN"
+          },
+          "message": {
+            "type": "string",
+            "example": "You do not have permission to access this resource."
+          },
+          "support": {
+            "type": "string",
+            "example": "Refer to the API documentation for the correct request format : http://127.0.0.1:5500/docs/index.html#tag/Authentication-and-Authorization"
+          }
+        },
+        "required": [
+          "status",
+          "code",
+          "message",
+          "support"
+        ]
+      },
+      "AccountCreateDTO": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Agency XYZ",
+            "description": "Name of the account"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "NETWORK",
+              "AGENCY",
+              "ADVERTISER",
+              "PUBLISHER",
+              "SUPER_ADMIN"
+            ],
+            "example": "AGENCY",
+            "description": "Type of account (NETWORK, AGENCY, PUBLISHER, ADVERTISER)"
+          },
+          "parentId": {
+            "type": "number",
+            "example": 1,
+            "description": "Parent account ID. If not provided, uses current user's account ID"
+          },
+          "companyId": {
+            "type": "number",
+            "example": 1,
+            "description": "Company ID associated with the account"
+          },
+          "currency": {
+            "type": "string",
+            "example": "USD",
+            "description": "Currency code for the account"
+          },
+          "timezone": {
+            "type": "string",
+            "example": "UTC",
+            "description": "Timezone for the account"
+          }
+        },
+        "required": [
+          "name",
+          "type"
+        ]
+      },
+      "AccountCreateResponseDTO": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Account created successfully",
+            "description": "Success message"
+          }
+        },
+        "required": [
+          "message"
+        ]
+      },
+      "AccountUpdateDTO": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Updated Agency Name",
+            "description": "New name for the account"
+          },
+          "timezone": {
+            "type": "string",
+            "example": "UTC+5:30",
+            "description": "Updated timezone"
+          },
+          "currency": {
+            "type": "string",
+            "example": "USD",
+            "description": "Updated currency code"
+          }
+        },
+        "required": [
+          "name"
+        ]
+      },
+      "AccountUpdateResponseDTO": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Account updated successfully",
+            "description": "Success message"
+          }
+        },
+        "required": [
+          "message"
+        ]
+      },
+      "UserListResponseDTO": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "description": "List of users",
+            "example": [
+              {
+                "id": 1,
+                "email": "john.doe@example.com",
+                "name": "John Doe",
+                "status": "ACTIVE",
+                "roleId": 1,
+                "roleName": "ADMIN"
+              }
+            ]
+          },
+          "meta": {
+            "type": "object",
+            "example": {
+              "totalItems": 20,
+              "itemCount": 10,
+              "itemsPerPage": 10,
+              "totalPages": 2,
+              "currentPage": 1
+            }
+          }
+        },
+        "required": [
+          "items",
+          "meta"
+        ]
+      },
+      "UserViewResponseDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "example": 1
+          },
+          "firstName": {
+            "type": "string",
+            "example": "John"
+          },
+          "lastName": {
+            "type": "string",
+            "example": "Doe"
+          },
+          "email": {
+            "type": "string",
+            "example": "john.doe@example.com"
+          },
+          "phone": {
+            "type": "string",
+            "example": "+1234567890"
+          },
+          "roleId": {
+            "type": "number",
+            "example": 1
+          },
+          "roleName": {
+            "type": "string",
+            "example": "ADMIN"
+          }
+        },
+        "required": [
+          "id",
+          "firstName",
+          "lastName",
+          "email",
+          "phone",
+          "roleId",
+          "roleName"
+        ]
+      },
+      "InviteUserDTO": {
+        "type": "object",
+        "properties": {
+          "firstName": {
+            "type": "string",
+            "example": "John",
+            "description": "First name of the user"
+          },
+          "lastName": {
+            "type": "string",
+            "example": "Doe",
+            "description": "Last name of the user"
+          },
+          "email": {
+            "type": "string",
+            "example": "john.doe@example.com",
+            "description": "Email address of the user"
+          },
+          "phone": {
+            "type": "string",
+            "example": "+1234567890",
+            "description": "Phone number of the user"
+          },
+          "roleId": {
+            "type": "number",
+            "example": 1,
+            "description": "Role ID to be assigned to the user"
+          },
+          "roleName": {
+            "type": "string",
+            "example": "ADMIN",
+            "description": "Name of the role"
+          },
+          "accountId": {
+            "type": "number",
+            "example": 1,
+            "description": "Account ID to be assigned to the user"
+          }
+        },
+        "required": [
+          "firstName",
+          "lastName",
+          "email",
+          "phone",
+          "roleId",
+          "roleName",
+          "accountId"
+        ]
+      },
+      "UserCreateResponseDTO": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "User created successfully",
+            "description": "Creation success message"
+          }
+        },
+        "required": [
+          "message"
+        ]
+      },
+      "UserUpdateDTO": {
+        "type": "object",
+        "properties": {
+          "firstName": {
+            "type": "string",
+            "example": "John",
+            "description": "Updated first name"
+          },
+          "lastName": {
+            "type": "string",
+            "example": "Doe",
+            "description": "Updated last name"
+          },
+          "email": {
+            "type": "string",
+            "example": "john.doe@example.com",
+            "description": "Updated email address"
+          },
+          "phone": {
+            "type": "string",
+            "example": "+1234567890",
+            "description": "Updated phone number"
+          },
+          "roleId": {
+            "type": "number",
+            "example": 1,
+            "description": "Updated role ID"
+          }
+        },
+        "required": [
+          "firstName",
+          "lastName",
+          "email",
+          "phone",
+          "roleId"
+        ]
+      },
+      "UserUpdateResponseDTO": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "User updated successfully",
+            "description": "Update success message"
+          }
+        },
+        "required": [
+          "message"
+        ]
+      },
+      "UserStatusUpdateDTO": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "ACTIVE",
+              "INACTIVE",
+              "DELETED"
+            ],
+            "example": "ACTIVE",
+            "description": "New status for the user"
+          }
+        },
+        "required": [
+          "status"
+        ]
+      },
+      "UserStatusUpdateResponseDTO": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "User status updated successfully",
+            "description": "Status update success message"
+          }
+        },
+        "required": [
+          "message"
+        ]
+      },
+      "UserDeleteResponseDTO": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "User deleted successfully",
+            "description": "Deletion success message"
+          }
+        },
+        "required": [
+          "message"
+        ]
+      },
+      "CapabilityDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "example": 1
+          },
+          "name": {
+            "type": "string",
+            "example": "user_management"
+          },
+          "displayName": {
+            "type": "string",
+            "example": "User Management"
+          },
+          "description": {
+            "type": "string",
+            "example": "Manage user operations"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "displayName",
+          "description"
+        ]
+      },
+      "ModuleResponseDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "example": 1
+          },
+          "name": {
+            "type": "string",
+            "example": "USER"
+          },
+          "displayName": {
+            "type": "string",
+            "example": "User Module"
+          },
+          "description": {
+            "type": "string",
+            "example": "User management module"
+          },
+          "capabilities": {
+            "description": "List of capabilities in this module",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CapabilityDTO"
+            }
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "displayName",
+          "description",
+          "capabilities"
+        ]
+      },
+      "RoleCapabilityDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "example": 1
+          },
+          "roleId": {
+            "type": "number",
+            "example": 1
+          },
+          "capabilityId": {
+            "type": "number",
+            "example": 1
+          },
+          "create": {
+            "type": "boolean",
+            "example": true
+          },
+          "read": {
+            "type": "boolean",
+            "example": true
+          },
+          "update": {
+            "type": "boolean",
+            "example": true
+          },
+          "delete": {
+            "type": "boolean",
+            "example": true
+          }
+        },
+        "required": [
+          "id",
+          "roleId",
+          "capabilityId",
+          "create",
+          "read",
+          "update",
+          "delete"
+        ]
+      },
+      "RoleResponseDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "example": 1
+          },
+          "name": {
+            "type": "string",
+            "example": "ADMIN"
+          },
+          "description": {
+            "type": "string",
+            "example": "Administrator role with full access"
+          },
+          "status": {
+            "type": "string",
+            "example": "ACTIVE"
+          },
+          "capabilities": {
+            "description": "List of capabilities assigned to this role",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RoleCapabilityDTO"
+            }
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "description",
+          "status",
+          "capabilities"
+        ]
+      },
+      "RoleListResponseDTO": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "description": "List of roles",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RoleResponseDTO"
+            }
+          },
+          "meta": {
+            "type": "object",
+            "example": {
+              "totalItems": 20,
+              "itemCount": 10,
+              "itemsPerPage": 10,
+              "totalPages": 2,
+              "currentPage": 1
+            }
+          }
+        },
+        "required": [
+          "items",
+          "meta"
+        ]
+      },
+      "RoleCreateDTO": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "ADMIN",
+            "description": "Name of the role"
+          },
+          "description": {
+            "type": "string",
+            "example": "Administrator role with full access",
+            "description": "Description of the role"
+          },
+          "capabilities": {
+            "description": "List of capabilities assigned to this role",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RoleCapabilityDTO"
+            }
+          }
+        },
+        "required": [
+          "name",
+          "description",
+          "capabilities"
+        ]
+      },
+      "RoleCreateResponseDTO": {
+        "type": "object",
+        "properties": {
+          "role": {
+            "type": "object",
+            "example": {
+              "id": 1,
+              "name": "ADMIN",
+              "description": "Administrator role"
+            },
+            "description": "Created role details"
+          }
+        },
+        "required": [
+          "role"
+        ]
+      },
+      "RoleUpdateResponseDTO": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Record updated successfully",
+            "description": "Success message for role update"
+          }
+        },
+        "required": [
+          "message"
+        ]
+      }
+    }
+  }
 }
