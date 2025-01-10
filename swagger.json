@@ -219,48 +219,21 @@
       "get": {
         "operationId": "AccountController_list",
         "summary": "List Accounts",
-        "description": "List all accounts created by the current user.\n    - Supports pagination\n    - Supports filtering and sorting\n    - Returns managed accounts based on user type\n    - Includes parent account details for hierarchy",
+        "description": "Retrieve a paginated list of accounts.\n    - Supports filtering and sorting\n    - Returns active accounts by default\n    - Can filter by parent account\n    - Includes account type and status",
         "parameters": [
           {
             "name": "filter",
             "required": false,
             "in": "query",
-            "description": "Filter format: {\n      where: [\n        { \n          isSearch: boolean,\n          key: string,\n          value: any\n        }\n      ],\n      orderBy: \"property_name ASC | DESC\"\n    }",
+            "description": "Filter query in JSON format. Example: {\"where\":[{\"key\":\"name\",\"value\":\"test\"}],\"orderBy\":\"createdAt DESC\"}",
             "schema": {
               "type": "string"
-            }
-          },
-          {
-            "name": "parentId",
-            "required": false,
-            "in": "query",
-            "description": "Filter by parent account ID",
-            "schema": {
-              "type": "number"
-            }
-          },
-          {
-            "name": "limit",
-            "required": false,
-            "in": "query",
-            "description": "Items per page (default: 10)",
-            "schema": {
-              "type": "number"
-            }
-          },
-          {
-            "name": "page",
-            "required": false,
-            "in": "query",
-            "description": "Page number (default: 1)",
-            "schema": {
-              "type": "number"
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "List of accounts retrieved successfully",
+            "description": "List of accounts with pagination metadata",
             "content": {
               "application/json": {
                 "schema": {
@@ -275,26 +248,6 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/UnauthorizedExceptionResDTO"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden - insufficient permissions",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ForbiddenExceptionResDTO"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal server error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalServerErrorExceptionResDTO"
                 }
               }
             }
@@ -314,13 +267,12 @@
       "get": {
         "operationId": "AccountController_getAccountDetail",
         "summary": "View Account Details",
-        "description": "Get detailed information about a specific account",
+        "description": "Retrieve detailed information about a specific account",
         "parameters": [
           {
             "name": "id",
             "required": true,
             "in": "path",
-            "description": "Account ID to retrieve",
             "schema": {
               "type": "number"
             }
@@ -332,37 +284,17 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/AccountResponseDTO"
+                  "$ref": "#/components/schemas/AccountViewResponseDTO"
                 }
               }
             }
           },
           "400": {
-            "description": "Invalid account ID",
+            "description": "Invalid account ID or account not found",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/BadRequestExceptionResDTO"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized access",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UnauthorizedExceptionResDTO"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Account not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/NotFoundExceptionResDTO"
                 }
               }
             }
@@ -380,13 +312,12 @@
       "patch": {
         "operationId": "AccountController_updateAccount",
         "summary": "Update Account",
-        "description": "Update an existing account.\n    - Validates account name uniqueness\n    - Updates modifiedBy and modifiedAt\n    - Maintains account hierarchy",
+        "description": "Update an existing account's information",
         "parameters": [
           {
             "name": "id",
             "required": true,
             "in": "path",
-            "description": "Account ID to update",
             "schema": {
               "type": "number"
             }
@@ -414,7 +345,7 @@
             }
           },
           "400": {
-            "description": "Invalid input data",
+            "description": "Invalid input data or account not found",
             "content": {
               "application/json": {
                 "schema": {
@@ -422,9 +353,44 @@
                 }
               }
             }
+          }
+        },
+        "tags": [
+          "Account Management"
+        ],
+        "security": [
+          {
+            "access-token": []
+          }
+        ]
+      },
+      "delete": {
+        "operationId": "AccountController_deleteAccount",
+        "summary": "Delete Account",
+        "description": "Soft delete an account from the system",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Account deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccountDeleteResponseDTO"
+                }
+              }
+            }
           },
           "403": {
-            "description": "Duplicate account name",
+            "description": "Cannot delete self or insufficient permissions",
             "content": {
               "application/json": {
                 "schema": {
@@ -448,7 +414,7 @@
       "post": {
         "operationId": "AccountController_create",
         "summary": "Create Account",
-        "description": "Create a new child account under the current user account.\n    - Validates account name uniqueness\n    - Sets up parent-child relationship\n    - Inherits currency and timezone from parent\n    - Updates managed accounts cache",
+        "description": "Create a new child account under the current user account",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -482,11 +448,68 @@
             }
           },
           "403": {
-            "description": "Duplicate account name",
+            "description": "Account name already exists",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ForbiddenExceptionResDTO"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Account Management"
+        ],
+        "security": [
+          {
+            "access-token": []
+          }
+        ]
+      }
+    },
+    "/am/account/status/{id}": {
+      "patch": {
+        "operationId": "AccountController_updateStatus",
+        "summary": "Update Account Status",
+        "description": "Update account's active/inactive status",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AccoutStatusDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Account status updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccountStatusUpdateResponseDTO"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid status or account not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestExceptionResDTO"
                 }
               }
             }
@@ -821,7 +844,7 @@
         ]
       }
     },
-    "/module/get-module": {
+    "/am/module/get-module": {
       "get": {
         "operationId": "ModuleController_listModules",
         "summary": "List Modules & Capabilities",
@@ -1431,57 +1454,52 @@
         "type": "object",
         "properties": {
           "id": {
-            "type": "number",
-            "example": 1
+            "type": "number"
           },
           "name": {
-            "type": "string",
-            "example": "Agency XYZ"
+            "type": "string"
           },
-          "type": {
+          "description": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "accountType": {
             "type": "string",
-            "example": "AGENCY"
+            "enum": [
+              "NETWORK",
+              "AGENCY",
+              "ADVERTISER",
+              "PUBLISHER",
+              "SUPER_ADMIN"
+            ]
+          },
+          "selfManaged": {
+            "type": "boolean"
           },
           "status": {
-            "type": "string",
-            "example": "ACTIVE"
+            "type": "string"
           },
-          "parentId": {
-            "type": "number",
-            "example": 1
-          },
-          "companyId": {
-            "type": "number",
-            "example": 1
-          },
-          "currency": {
-            "type": "string",
-            "example": "USD"
-          },
-          "timezone": {
-            "type": "string",
-            "example": "UTC"
+          "website": {
+            "type": "string"
           },
           "createdAt": {
             "format": "date-time",
-            "type": "string",
-            "example": "2024-01-07T12:00:00Z"
+            "type": "string"
           },
           "updatedAt": {
             "format": "date-time",
-            "type": "string",
-            "example": "2024-01-07T12:00:00Z"
+            "type": "string"
           }
         },
         "required": [
           "id",
           "name",
-          "type",
+          "email",
+          "accountType",
+          "selfManaged",
           "status",
-          "parentId",
-          "companyId",
-          "currency",
-          "timezone",
           "createdAt",
           "updatedAt"
         ]
@@ -1490,26 +1508,220 @@
         "type": "object",
         "properties": {
           "items": {
-            "description": "List of accounts",
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/AccountResponseDTO"
             }
           },
           "meta": {
-            "type": "object",
-            "example": {
-              "totalItems": 20,
-              "itemCount": 10,
-              "itemsPerPage": 10,
-              "totalPages": 2,
-              "currentPage": 1
-            }
+            "type": "object"
           }
         },
         "required": [
           "items",
           "meta"
+        ]
+      },
+      "AccountViewResponseDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "accountType": {
+            "type": "string",
+            "enum": [
+              "NETWORK",
+              "AGENCY",
+              "ADVERTISER",
+              "PUBLISHER",
+              "SUPER_ADMIN"
+            ]
+          },
+          "selfManaged": {
+            "type": "boolean"
+          },
+          "status": {
+            "type": "string"
+          },
+          "website": {
+            "type": "string"
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "updatedAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "parentId": {
+            "type": "number"
+          },
+          "companyId": {
+            "type": "number"
+          },
+          "address1": {
+            "type": "string"
+          },
+          "address2": {
+            "type": "string"
+          },
+          "city": {
+            "type": "string"
+          },
+          "state": {
+            "type": "string"
+          },
+          "zip": {
+            "type": "string"
+          },
+          "country": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "email",
+          "accountType",
+          "selfManaged",
+          "status",
+          "createdAt",
+          "updatedAt",
+          "parentId",
+          "companyId",
+          "address1",
+          "city",
+          "state",
+          "zip",
+          "country"
+        ]
+      },
+      "AccountCreateDTO": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name of the account",
+            "example": "Acme Corporation"
+          },
+          "description": {
+            "type": "string",
+            "description": "Description of the account",
+            "example": "Global technology solutions provider"
+          },
+          "email": {
+            "type": "string",
+            "description": "Primary email address for the account",
+            "example": "contact@acme.com"
+          },
+          "accountType": {
+            "type": "string",
+            "description": "Type of account",
+            "enum": [
+              "NETWORK",
+              "AGENCY",
+              "ADVERTISER",
+              "PUBLISHER",
+              "SUPER_ADMIN"
+            ],
+            "example": "AGENCY"
+          },
+          "selfManaged": {
+            "type": "boolean",
+            "description": "Whether the account is self-managed",
+            "example": true
+          },
+          "phone": {
+            "type": "string",
+            "description": "Contact phone number",
+            "example": "+1-555-123-4567"
+          },
+          "address1": {
+            "type": "string",
+            "description": "Primary street address",
+            "example": "123 Business Avenue"
+          },
+          "address2": {
+            "type": "string",
+            "description": "Secondary address line",
+            "example": "Suite 456"
+          },
+          "city": {
+            "type": "string",
+            "description": "City name",
+            "example": "San Francisco"
+          },
+          "state": {
+            "type": "string",
+            "description": "State or province",
+            "example": "CA"
+          },
+          "zip": {
+            "type": "string",
+            "description": "Postal/ZIP code",
+            "example": "94105"
+          },
+          "country": {
+            "type": "string",
+            "description": "Country name",
+            "example": "United States"
+          },
+          "parentId": {
+            "type": "number",
+            "description": "ID of the parent account",
+            "example": 1
+          },
+          "website": {
+            "type": "string",
+            "description": "Company website URL",
+            "example": "https://www.acme.com"
+          },
+          "companyId": {
+            "type": "number",
+            "description": "Company ID in the system",
+            "example": 1001
+          },
+          "updatedAt": {
+            "format": "date-time",
+            "type": "string",
+            "description": "Timestamp of the last update"
+          }
+        },
+        "required": [
+          "name",
+          "email",
+          "accountType",
+          "selfManaged",
+          "phone",
+          "address1",
+          "city",
+          "state",
+          "zip",
+          "country",
+          "parentId",
+          "companyId"
+        ]
+      },
+      "AccountCreateResponseDTO": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "message"
         ]
       },
       "ForbiddenExceptionResDTO": {
@@ -1539,95 +1751,116 @@
           "support"
         ]
       },
-      "AccountCreateDTO": {
+      "AccountUpdateDTO": {
         "type": "object",
         "properties": {
           "name": {
             "type": "string",
-            "example": "Agency XYZ",
-            "description": "Name of the account"
+            "description": "Updated account name",
+            "example": "Acme Corp Global"
           },
-          "type": {
+          "description": {
             "type": "string",
-            "enum": [
-              "NETWORK",
-              "AGENCY",
-              "ADVERTISER",
-              "PUBLISHER",
-              "SUPER_ADMIN"
-            ],
-            "example": "AGENCY",
-            "description": "Type of account (NETWORK, AGENCY, PUBLISHER, ADVERTISER)"
+            "description": "Updated account description",
+            "example": "Leading technology solutions provider"
           },
-          "parentId": {
-            "type": "number",
-            "example": 1,
-            "description": "Parent account ID. If not provided, uses current user's account ID"
-          },
-          "companyId": {
-            "type": "number",
-            "example": 1,
-            "description": "Company ID associated with the account"
-          },
-          "currency": {
+          "email": {
             "type": "string",
-            "example": "USD",
-            "description": "Currency code for the account"
+            "description": "Updated email address",
+            "example": "newcontact@acme.com"
           },
-          "timezone": {
+          "phone": {
             "type": "string",
-            "example": "UTC",
-            "description": "Timezone for the account"
+            "description": "Updated phone number",
+            "example": "+1-555-987-6543"
+          },
+          "website": {
+            "type": "string",
+            "description": "Updated website URL",
+            "example": "https://www.acme-global.com"
+          },
+          "address1": {
+            "type": "string",
+            "description": "Updated primary address",
+            "example": "456 Enterprise Street"
+          },
+          "address2": {
+            "type": "string",
+            "description": "Updated secondary address",
+            "example": "Floor 12"
+          },
+          "city": {
+            "type": "string",
+            "description": "Updated city",
+            "example": "New York"
+          },
+          "state": {
+            "type": "string",
+            "description": "Updated state",
+            "example": "NY"
+          },
+          "country": {
+            "type": "string",
+            "description": "Updated country",
+            "example": "United States"
+          },
+          "zip": {
+            "type": "string",
+            "description": "Updated ZIP/postal code",
+            "example": "10001"
+          },
+          "updatedAt": {
+            "format": "date-time",
+            "type": "string",
+            "description": "Timestamp of the last update"
           }
-        },
-        "required": [
-          "name",
-          "type"
-        ]
+        }
       },
-      "AccountCreateResponseDTO": {
+      "AccountUpdateResponseDTO": {
         "type": "object",
         "properties": {
           "message": {
-            "type": "string",
-            "example": "Account created successfully",
-            "description": "Success message"
+            "type": "string"
           }
         },
         "required": [
           "message"
         ]
       },
-      "AccountUpdateDTO": {
+      "AccoutStatusDTO": {
         "type": "object",
         "properties": {
-          "name": {
+          "status": {
             "type": "string",
-            "example": "Updated Agency Name",
-            "description": "New name for the account"
-          },
-          "timezone": {
-            "type": "string",
-            "example": "UTC+5:30",
-            "description": "Updated timezone"
-          },
-          "currency": {
-            "type": "string",
-            "example": "USD",
-            "description": "Updated currency code"
+            "description": "New account status",
+            "example": "ACTIVE",
+            "enum": [
+              "ACTIVE",
+              "INACTIVE",
+              "SUSPENDED"
+            ]
           }
         },
         "required": [
-          "name"
+          "status"
         ]
       },
-      "AccountUpdateResponseDTO": {
+      "AccountStatusUpdateResponseDTO": {
         "type": "object",
         "properties": {
           "message": {
-            "type": "string",
-            "example": "Account updated successfully",
-            "description": "Success message"
+            "type": "string"
+          }
+        },
+        "required": [
+          "message"
+        ]
+      },
+      "AccountDeleteResponseDTO": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
           }
         },
         "required": [
@@ -1720,7 +1953,7 @@
           "lastName": {
             "type": "string",
             "example": "Doe",
-            "description": "Last name of the user"
+            "description": "Last name of the usexr"
           },
           "email": {
             "type": "string",
