@@ -1,0 +1,608 @@
+{"totalRecords": 56,
+"records": [
+{
+"id": 1,
+"categoryName": "Arts & Entertainment",
+"categoryJapaneseName": "エンタメ",
+"subCategoryName": [
+{
+"id": 2,
+"subCategoryName": "Celebrity Fan/Gossip"
+},
+{
+"id": 6,
+"subCategoryName": "Fine Art"
+},
+{
+"id": 5,
+"subCategoryName": "Humor"
+},
+{
+"id": 4,
+"subCategoryName": "Music"
+},
+{
+"id": 3,
+"subCategoryName": "Television"
+}
+]
+},
+{
+"id": 2,
+"categoryName": "Automotive",
+"categoryJapaneseName": "自動車",
+"subCategoryName": [
+{
+"id": 8,
+"subCategoryName": "Car Culture"
+},
+{
+"id": 9,
+"subCategoryName": "Electric Vehicle"
+},
+{
+"id": 10,
+"subCategoryName": "Luxury"
+},
+{
+"id": 11,
+"subCategoryName": "Motorcycles"
+},
+{
+"id": 12,
+"subCategoryName": "Off Road Vehicles"
+},
+{
+"id": 13,
+"subCategoryName": "Trucks & Accessories"
+},
+{
+"id": 14,
+"subCategoryName": "Vintage Cars"
+}
+]
+},
+{
+"id": 108,
+"categoryName": "Beauty",
+"categoryJapaneseName": "美容",
+"subCategoryName": null
+},
+{
+"id": 6,
+"categoryName": "Business",
+"categoryJapaneseName": "ビジネス",
+"subCategoryName": [
+{
+"id": 16,
+"subCategoryName": "Biotech/Biomedical"
+},
+{
+"id": 17,
+"subCategoryName": "Business Software"
+},
+{
+"id": 18,
+"subCategoryName": "Government"
+},
+{
+"id": 19,
+"subCategoryName": "Green Solutions"
+},
+{
+"id": 20,
+"subCategoryName": "Human Resources"
+},
+{
+"id": 21,
+"subCategoryName": "Marketing"
+}
+]
+},
+{
+"id": 78,
+"categoryName": "Business & Technology",
+"categoryJapaneseName": "ビジネス＆IT",
+"subCategoryName": null
+},
+{
+"id": 112,
+"categoryName": "CGM",
+"categoryJapaneseName": "CGM",
+"subCategoryName": null
+},
+{
+"id": 96,
+"categoryName": "Careers",
+"categoryJapaneseName": null,
+"subCategoryName": [
+{
+"id": 22,
+"subCategoryName": "Career Planning"
+},
+{
+"id": 23,
+"subCategoryName": "College"
+},
+{
+"id": 24,
+"subCategoryName": "Job Search"
+}
+]
+},
+{
+"id": 66,
+"categoryName": "Comic",
+"categoryJapaneseName": "マンガ",
+"subCategoryName": null
+},
+{
+"id": 110,
+"categoryName": "Dining Out",
+"categoryJapaneseName": "外食",
+"subCategoryName": null
+},
+{
+"id": 79,
+"categoryName": "E-commerce",
+"categoryJapaneseName": "EC",
+"subCategoryName": null
+},
+{
+"id": 12,
+"categoryName": "Education",
+"categoryJapaneseName": "教育",
+"subCategoryName": [
+{
+"id": 26,
+"subCategoryName": "College Life"
+},
+{
+"id": 33,
+"subCategoryName": "Distance Learning"
+},
+{
+"id": 29,
+"subCategoryName": "Home Schooling"
+},
+{
+"id": 27,
+"subCategoryName": "Homework/Study Tips"
+},
+{
+"id": 31,
+"subCategoryName": "K-6 Educators"
+},
+{
+"id": 28,
+"subCategoryName": "Language Learning"
+},
+{
+"id": 30,
+"subCategoryName": "Special Education"
+}
+]
+},
+{
+"id": 67,
+"categoryName": "Electronics Blog",
+"categoryJapaneseName": null,
+"subCategoryName": null
+},
+{
+"id": 20,
+"categoryName": "Entertainment & Music",
+"categoryJapaneseName": "エンタメ&音楽",
+"subCategoryName": null
+},
+{
+"id": 13,
+"categoryName": "Family & Parenting",
+"categoryJapaneseName": "出産・育児",
+"subCategoryName": [
+{
+"id": 35,
+"subCategoryName": "Family Internet"
+},
+{
+"id": 37,
+"subCategoryName": "Parenting K-6 kids"
+},
+{
+"id": 38,
+"subCategoryName": "Parenting Teens"
+},
+{
+"id": 36,
+"subCategoryName": "Pregnancy"
+}
+]
+},
+{
+"id": 92,
+"categoryName": "Fashion",
+"categoryJapaneseName": "ファッション",
+"subCategoryName": null
+},
+{
+"id": 3,
+"categoryName": "Food & Drink",
+"categoryJapaneseName": null,
+"subCategoryName": [
+{
+"id": 49,
+"subCategoryName": "Cuisine-Specific"
+},
+{
+"id": 52,
+"subCategoryName": "Dining Out"
+},
+{
+"id": 51,
+"subCategoryName": "Health/Low Fat Cooking"
+},
+{
+"id": 48,
+"subCategoryName": "Vegetarian"
+},
+{
+"id": 50,
+"subCategoryName": "Wine"
+}
+]
+},
+{
+"id": 99,
+"categoryName": "Gadgets",
+"categoryJapaneseName": "ガジェット",
+"subCategoryName": null
+},
+{
+"id": 5,
+"categoryName": "Games & Recreation",
+"categoryJapaneseName": "ゲーム",
+"subCategoryName": null
+},
+{
+"id": 14,
+"categoryName": "Health & Fitness",
+"categoryJapaneseName": "ヘルス",
+"subCategoryName": [
+{
+"id": 39,
+"subCategoryName": "Exercise"
+},
+{
+"id": 46,
+"subCategoryName": "Holistic Healing"
+},
+{
+"id": 43,
+"subCategoryName": "Infertility"
+},
+{
+"id": 41,
+"subCategoryName": "Men's Health"
+},
+{
+"id": 42,
+"subCategoryName": "Nutrition"
+},
+{
+"id": 45,
+"subCategoryName": "Psychology/Psychiatry"
+},
+{
+"id": 44,
+"subCategoryName": "Weight Loss"
+},
+{
+"id": 40,
+"subCategoryName": "Women's Health"
+}
+]
+},
+{
+"id": 4,
+"categoryName": "Hobbies & Interests",
+"categoryJapaneseName": null,
+"subCategoryName": [
+{
+"id": 67,
+"subCategoryName": "Arts & Crafts"
+},
+{
+"id": 68,
+"subCategoryName": "Board Games & Puzzles"
+},
+{
+"id": 69,
+"subCategoryName": "Collecting"
+},
+{
+"id": 73,
+"subCategoryName": "Comic Books"
+},
+{
+"id": 74,
+"subCategoryName": "Investors & Patents"
+},
+{
+"id": 75,
+"subCategoryName": "Painting"
+},
+{
+"id": 72,
+"subCategoryName": "Photography"
+},
+{
+"id": 71,
+"subCategoryName": "Radio"
+},
+{
+"id": 76,
+"subCategoryName": "Sci-Fi & Fantasy"
+},
+{
+"id": 70,
+"subCategoryName": "Video & Computer Games"
+}
+]
+},
+{
+"id": 22,
+"categoryName": "Home & Garden",
+"categoryJapaneseName": null,
+"subCategoryName": [
+{
+"id": 62,
+"subCategoryName": "Gardening"
+},
+{
+"id": 63,
+"subCategoryName": "Home Repair"
+},
+{
+"id": 64,
+"subCategoryName": "Interior Decorating"
+},
+{
+"id": 65,
+"subCategoryName": "Remodeling & Construction"
+}
+]
+},
+{
+"id": 102,
+"categoryName": "Housewife",
+"categoryJapaneseName": "主婦",
+"subCategoryName": null
+},
+{
+"id": 106,
+"categoryName": "How To",
+"categoryJapaneseName": "How to",
+"subCategoryName": null
+},
+{
+"id": 115,
+"categoryName": "ISP",
+"categoryJapaneseName": "プロバイダ",
+"subCategoryName": null
+},
+{
+"id": 109,
+"categoryName": "Interior",
+"categoryJapaneseName": "インテリア",
+"subCategoryName": null
+},
+{
+"id": 7,
+"categoryName": "Law, Government & Politics",
+"categoryJapaneseName": null,
+"subCategoryName": [
+{
+"id": 60,
+"subCategoryName": "Legal Issues"
+},
+{
+"id": 57,
+"subCategoryName": "Politics"
+},
+{
+"id": 59,
+"subCategoryName": "US Government Resources"
+}
+]
+},
+{
+"id": 98,
+"categoryName": "Life Information",
+"categoryJapaneseName": "生活情報",
+"subCategoryName": null
+},
+{
+"id": 56,
+"categoryName": "Medicine",
+"categoryJapaneseName": "医療",
+"subCategoryName": null
+},
+{
+"id": 101,
+"categoryName": "Movie",
+"categoryJapaneseName": "映画",
+"subCategoryName": null
+},
+{
+"id": 15,
+"categoryName": "News",
+"categoryJapaneseName": "ニュース",
+"subCategoryName": [
+{
+"id": 56,
+"subCategoryName": "Local News"
+},
+{
+"id": 55,
+"subCategoryName": "National News"
+}
+]
+},
+{
+"id": 113,
+"categoryName": "Other",
+"categoryJapaneseName": "その他",
+"subCategoryName": null
+},
+{
+"id": 114,
+"categoryName": "Oversea",
+"categoryJapaneseName": "海外",
+"subCategoryName": null
+},
+{
+"id": 18,
+"categoryName": "Personal Finance",
+"categoryJapaneseName": null,
+"subCategoryName": null
+},
+{
+"id": 23,
+"categoryName": "Pets",
+"categoryJapaneseName": "ペット",
+"subCategoryName": null
+},
+{
+"id": 97,
+"categoryName": "Portal",
+"categoryJapaneseName": "ポータル",
+"subCategoryName": null
+},
+{
+"id": 103,
+"categoryName": "Price Information",
+"categoryJapaneseName": "情報",
+"subCategoryName": null
+},
+{
+"id": 104,
+"categoryName": "Prize",
+"categoryJapaneseName": "懸賞",
+"subCategoryName": null
+},
+{
+"id": 77,
+"categoryName": "Regional News",
+"categoryJapaneseName": "地域ニュース",
+"subCategoryName": null
+},
+{
+"id": 105,
+"categoryName": "SNS",
+"categoryJapaneseName": "SNS",
+"subCategoryName": null
+},
+{
+"id": 8,
+"categoryName": "Science",
+"categoryJapaneseName": null,
+"subCategoryName": null
+},
+{
+"id": 17,
+"categoryName": "Society",
+"categoryJapaneseName": null,
+"subCategoryName": null
+},
+{
+"id": 25,
+"categoryName": "Sports",
+"categoryJapaneseName": "スポーツ",
+"subCategoryName": null
+},
+{
+"id": 10,
+"categoryName": "Style & Fashion",
+"categoryJapaneseName": "スタイル&ファッション",
+"subCategoryName": null
+},
+{
+"id": 11,
+"categoryName": "Technology & Computing",
+"categoryJapaneseName": "IT",
+"subCategoryName": null
+},
+{
+"id": 100,
+"categoryName": "Traffic",
+"categoryJapaneseName": "交通",
+"subCategoryName": null
+},
+{
+"id": 9,
+"categoryName": "Travel",
+"categoryJapaneseName": "旅行",
+"subCategoryName": null
+},
+{
+"id": 107,
+"categoryName": "Weather",
+"categoryJapaneseName": "Weather",
+"subCategoryName": null
+},
+{
+"id": 111,
+"categoryName": "Weight Loss",
+"categoryJapaneseName": "ダイエット",
+"subCategoryName": null
+},
+{
+"id": 80,
+"categoryName": "Women Centric",
+"categoryJapaneseName": "女性",
+"subCategoryName": null
+},
+{
+"id": 122,
+"categoryName": "エンタテインメント",
+"categoryJapaneseName": "エンタテインメント",
+"subCategoryName": null
+},
+{
+"id": 118,
+"categoryName": "オプトイン・ターゲティング",
+"categoryJapaneseName": "オプトイン・ターゲティング",
+"subCategoryName": null
+},
+{
+"id": 116,
+"categoryName": "スポーツ・芸能",
+"categoryJapaneseName": "スポーツ・芸能",
+"subCategoryName": null
+},
+{
+"id": 121,
+"categoryName": "テレビ",
+"categoryJapaneseName": "テレビ",
+"subCategoryName": null
+},
+{
+"id": 117,
+"categoryName": "ニュース・ビジネス・金融",
+"categoryJapaneseName": "ニュース・ビジネス・金融",
+"subCategoryName": null
+},
+{
+"id": 119,
+"categoryName": "ポータルサイト",
+"categoryJapaneseName": "ポータルサイト",
+"subCategoryName": null
+},
+{
+"id": 120,
+"categoryName": "動画",
+"categoryJapaneseName": "動画",
+"subCategoryName": null
+}
+]
+}
