@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Account Request</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            width: 100%;
+            max-width: 500px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #ff6b6b, #feca57, #48dbfb, #ff9ff3);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .delete-icon {
+            width: 60px;
+            height: 60px;
+            background: #ff4757;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            color: white;
+            font-size: 24px;
+        }
+
+        h1 {
+            color: #2c3e50;
+            font-size: 28px;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .subtitle {
+            color: #7f8c8d;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+        .warning-box {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 20px 0;
+            color: #856404;
+        }
+
+        .warning-box strong {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #2c3e50;
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .required {
+            color: #e74c3c;
+        }
+
+        input[type="text"],
+        input[type="email"] {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e1e8ed;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        input.error {
+            border-color: #e74c3c;
+            background: #fdf2f2;
+        }
+
+        .error-message {
+            color: #e74c3c;
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin: 25px 0;
+        }
+
+        .checkbox-wrapper {
+            position: relative;
+        }
+
+        input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            margin: 0;
+            cursor: pointer;
+        }
+
+        .checkbox-label {
+            font-size: 14px;
+            line-height: 1.4;
+            color: #34495e;
+            cursor: pointer;
+        }
+
+        .delete-btn {
+            width: 100%;
+            padding: 15px;
+            background: #95a5a6;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: not-allowed;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .delete-btn.enabled {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            cursor: pointer;
+            transform: translateY(0);
+        }
+
+        .delete-btn.enabled:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(231, 76, 60, 0.3);
+        }
+
+        .delete-btn.enabled:active {
+            transform: translateY(0);
+        }
+
+        .delete-btn:disabled {
+            opacity: 0.6;
+        }
+
+        .loading {
+            display: none;
+        }
+
+        .loading.show {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #ffffff;
+            border-radius: 50%;
+            border-top-color: transparent;
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 10px;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Snackbar Styles */
+        .snackbar {
+            visibility: hidden;
+            background-color: #4caf50;
+            color: white;
+            text-align: center;
+            border-radius: 10px;
+            padding: 16px 24px;
+            position: fixed;
+            z-index: 1000;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 16px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .snackbar.show {
+            visibility: visible;
+            animation: slideUp 0.5s ease-out, fadeOut 0.5s ease-in 2.5s;
+        }
+
+        .snackbar.error {
+            background-color: #f44336;
+        }
+
+        @keyframes slideUp {
+            from {
+                bottom: 0;
+                opacity: 0;
+                transform: translateX(-50%) translateY(100%);
+            }
+            to {
+                bottom: 30px;
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
+        }
+
+        @keyframes fadeOut {
+            from {
+                opacity: 1;
+            }
+            to {
+                opacity: 0;
+            }
+        }
+
+        .success-icon {
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #4caf50;
+            font-weight: bold;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            .container {
+                padding: 30px 20px;
+                margin: 10px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            .subtitle {
+                font-size: 14px;
+            }
+        }
+
+        /* Form validation feedback */
+        .field-valid {
+            border-color: #27ae60 !important;
+            background: #f8fff8 !important;
+        }
+
+        .field-valid:focus {
+            box-shadow: 0 0 0 3px rgba(39, 174, 96, 0.1) !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="delete-icon">🗑️</div>
+            <h1>Delete Account Request</h1>
+            <p class="subtitle">We're sorry to see you go. Please provide your details to submit a deletion request.</p>
+        </div>
+
+        <div class="warning-box">
+            <strong>⚠️ Important Notice:</strong>
+            Account deletion is permanent and cannot be undone. All your data will be permanently removed from our systems.
+        </div>
+
+        <form id="deleteForm">
+            <div class="form-group">
+                <label for="fullName">Full Name <span class="required">*</span></label>
+                <input type="text" id="fullName" name="fullName" placeholder="Enter your full name" required>
+                <div class="error-message" id="nameError">Please enter your full name</div>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email Address <span class="required">*</span></label>
+                <input type="email" id="email" name="email" placeholder="Enter your email address" required>
+                <div class="error-message" id="emailError">Please enter a valid email address</div>
+            </div>
+
+            <div class="checkbox-group">
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" id="confirmDelete" name="confirmDelete" required>
+                </div>
+                <label for="confirmDelete" class="checkbox-label">
+                    I understand that deleting my account is permanent and cannot be undone. All my data will be permanently removed.
+                </label>
+            </div>
+
+            <button type="submit" class="delete-btn" id="deleteBtn" disabled>
+                <span class="loading" id="loading"></span>
+                <span id="btnText">Submit Delete Request</span>
+            </button>
+        </form>
+    </div>
+
+    <!-- Snackbar -->
+    <div id="snackbar" class="snackbar">
+        <div class="success-icon">✓</div>
+        <span>Delete request submitted successfully!</span>
+    </div>
+
+    <script>
+        // Form elements
+        const form = document.getElementById('deleteForm');
+        const fullNameInput = document.getElementById('fullName');
+        const emailInput = document.getElementById('email');
+        const confirmCheckbox = document.getElementById('confirmDelete');
+        const deleteBtn = document.getElementById('deleteBtn');
+        const loading = document.getElementById('loading');
+        const btnText = document.getElementById('btnText');
+        const snackbar = document.getElementById('snackbar');
+
+        // Validation functions
+        function validateName(name) {
+            return name.trim().length >= 2 && /^[a-zA-Z\s]+$/.test(name.trim());
+        }
+
+        function validateEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email.trim());
+        }
+
+        function showError(input, errorId, message) {
+            input.classList.add('error');
+            input.classList.remove('field-valid');
+            const errorElement = document.getElementById(errorId);
+            errorElement.textContent = message;
+            errorElement.style.display = 'block';
+        }
+
+        function hideError(input, errorId) {
+            input.classList.remove('error');
+            input.classList.add('field-valid');
+            const errorElement = document.getElementById(errorId);
+            errorElement.style.display = 'none';
+        }
+
+        function checkFormValidity() {
+            const nameValid = validateName(fullNameInput.value);
+            const emailValid = validateEmail(emailInput.value);
+            const checkboxValid = confirmCheckbox.checked;
+
+            if (nameValid && emailValid && checkboxValid) {
+                deleteBtn.disabled = false;
+                deleteBtn.classList.add('enabled');
+            } else {
+                deleteBtn.disabled = true;
+                deleteBtn.classList.remove('enabled');
+            }
+        }
+
+        function showSnackbar(message, isError = false) {
+            const snackbar = document.getElementById('snackbar');
+            const snackbarText = snackbar.querySelector('span');
+            
+            snackbarText.textContent = message;
+            snackbar.className = `snackbar ${isError ? 'error' : ''}`;
+            snackbar.classList.add('show');
+
+            setTimeout(() => {
+                snackbar.classList.remove('show');
+            }, 3000);
+        }
+
+        // Event listeners
+        fullNameInput.addEventListener('input', function() {
+            const name = this.value.trim();
+            
+            if (name.length === 0) {
+                this.classList.remove('error', 'field-valid');
+                document.getElementById('nameError').style.display = 'none';
+            } else if (validateName(name)) {
+                hideError(this, 'nameError');
+            } else {
+                showError(this, 'nameError', 'Please enter a valid full name (letters and spaces only)');
+            }
+            
+            checkFormValidity();
+        });
+
+        emailInput.addEventListener('input', function() {
+            const email = this.value.trim();
+            
+            if (email.length === 0) {
+                this.classList.remove('error', 'field-valid');
+                document.getElementById('emailError').style.display = 'none';
+            } else if (validateEmail(email)) {
+                hideError(this, 'emailError');
+            } else {
+                showError(this, 'emailError', 'Please enter a valid email address');
+            }
+            
+            checkFormValidity();
+        });
+
+        confirmCheckbox.addEventListener('change', checkFormValidity);
+
+        // Form submission
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // Final validation
+            const nameValid = validateName(fullNameInput.value);
+            const emailValid = validateEmail(emailInput.value);
+
+            if (!nameValid) {
+                showError(fullNameInput, 'nameError', 'Please enter a valid full name');
+                return;
+            }
+
+            if (!emailValid) {
+                showError(emailInput, 'emailError', 'Please enter a valid email address');
+                return;
+            }
+
+            if (!confirmCheckbox.checked) {
+                showSnackbar('Please confirm that you understand the consequences', true);
+                return;
+            }
+
+            // Show loading state
+            loading.classList.add('show');
+            btnText.textContent = 'Submitting...';
+            deleteBtn.disabled = true;
+
+            // Simulate API call
+            setTimeout(() => {
+                // Hide loading state
+                loading.classList.remove('show');
+                btnText.textContent = 'Submit Delete Request';
+                
+                // Show success message
+                showSnackbar('Delete request submitted successfully!');
+                
+                // Reset form after success
+                setTimeout(() => {
+                    form.reset();
+                    deleteBtn.disabled = true;
+                    deleteBtn.classList.remove('enabled');
+                    fullNameInput.classList.remove('field-valid');
+                    emailInput.classList.remove('field-valid');
+                }, 2000);
+
+            }, 2000); // Simulate 2 second API call
+        });
+
+        // Add some interactive effects
+        deleteBtn.addEventListener('mouseenter', function() {
+            if (!this.disabled) {
+                this.style.transform = 'translateY(-2px)';
+            }
+        });
+
+        deleteBtn.addEventListener('mouseleave', function() {
+            if (!this.disabled) {
+                this.style.transform = 'translateY(0)';
+            }
+        });
+
+        // Initialize form state
+        checkFormValidity();
+    </script>
+</body>
+</html>
